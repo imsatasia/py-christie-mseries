@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/imsatasia/py-christie-mseries/compare/v1.1.0...v1.1.1) (2026-09-24)
+
+
+### Documentation
+
+* add a security policy ([7fed407](https://github.com/imsatasia/py-christie-mseries/commit/7fed40757431040a3ec0b58bce1695c2f7ddd3f7))
+
 ## [1.1.0](https://github.com/imsatasia/py-christie-mseries/compare/v1.0.0...v1.1.0) (2026-09-24)
 
 
