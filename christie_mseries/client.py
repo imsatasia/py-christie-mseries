@@ -239,7 +239,7 @@ class ChristieClient:
         try:
             while True:
                 replies.append(parse_message(self._read_message())[3])
-        except (TimeoutError, socket.timeout):
+        except TimeoutError:
             pass
         finally:
             sock.settimeout(self.timeout)
@@ -286,7 +286,7 @@ class ChristieClient:
         try:
             while True:
                 parse_message(self._read_message())
-        except (TimeoutError, socket.timeout):
+        except TimeoutError:
             pass
         finally:
             sock.settimeout(self.timeout)
