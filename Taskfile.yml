@@ -1,0 +1,48 @@
+version: '3'
+
+vars:
+  UV: uv
+
+tasks:
+  install:
+    desc: Create/update dev environment
+    cmds:
+      - '{{.UV}} sync --group dev'
+
+  test:
+    desc: Run tests
+    cmds:
+      - '{{.UV}} run pytest -v'
+
+  lint:
+    desc: Run linting with ruff
+    cmds:
+      - '{{.UV}} run ruff check .'
+
+  lint:fix:
+    desc: Run linting with ruff, applying fixes
+    cmds:
+      - '{{.UV}} run ruff check --fix .'
+
+  format:
+    desc: Format code with ruff
+    cmds:
+      - '{{.UV}} run ruff format .'
+
+  format:check:
+    desc: Check code formatting
+    cmds:
+      - '{{.UV}} run ruff format --check .'
+
+  typecheck:
+    desc: Run static type checking
+    cmds:
+      - '{{.UV}} run ty check christie_mseries'
+
+  check:
+    desc: Run all checks (lint + format + typecheck + test)
+    cmds:
+      - task: lint
+      - task: format:check
+      - task: typecheck
+      - task: test

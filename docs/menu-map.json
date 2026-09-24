@@ -1,0 +1,3782 @@
+[
+ {
+  "access": 2,
+  "code": "MMM+IMGS",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/IMGS",
+  "label": "Image Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "MMM+SIZE",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/SIZE",
+  "label": "Size & Position",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "SZP",
+  "default": 0,
+  "enabled": false,
+  "label": "Resize Presets",
+  "list": [
+   {
+    "icon": "aspect_auto",
+    "idx": 0,
+    "text": "Auto"
+   },
+   {
+    "icon": "aspect_noresize",
+    "idx": 1,
+    "text": "No Resizing"
+   },
+   {
+    "icon": "aspect_fullsize",
+    "idx": 2,
+    "text": "Full Size"
+   },
+   {
+    "icon": "aspect_fullwidth",
+    "idx": 3,
+    "text": "Full Width"
+   },
+   {
+    "icon": "aspect_fullheight",
+    "idx": 4,
+    "text": "Full Height"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Image Settings > Size & Position"
+ },
+ {
+  "access": 2,
+  "code": "MMM+GAMM",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/GAMM",
+  "label": "Color & Gamma",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "CSP",
+  "default": 0,
+  "enabled": false,
+  "label": "Color Space",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 1,
+    "text": "RGB (Full Range)"
+   },
+   {
+    "idx": 3,
+    "text": "RGB (Limited Range)"
+   },
+   {
+    "idx": 2,
+    "text": "YCbCr HDTV (Rec. 709)"
+   },
+   {
+    "idx": 4,
+    "text": "YCbCr HDTV (Expanded Range)"
+   },
+   {
+    "idx": 5,
+    "text": "YCbCr JPEG (Full Range)"
+   },
+   {
+    "idx": 6,
+    "text": "YCbCr UHDTV (Rec. 2020)"
+   },
+   {
+    "idx": 7,
+    "text": "YCbCr UHDTV (Rec. 2020) (Full Range)"
+   },
+   {
+    "idx": 8,
+    "text": "XYZ"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "CCA+SLCT",
+  "default": 4,
+  "enabled": false,
+  "label": "Color Correction Mode",
+  "list": [
+   {
+    "idx": 4,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   },
+   {
+    "idx": 3,
+    "text": "Custom"
+   }
+  ],
+  "type": 400,
+  "value": 4,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "CCA+CTMP",
+  "default": 6500,
+  "enabled": false,
+  "label": "Color Temperature",
+  "max": 9300,
+  "min": 3200,
+  "type": 201,
+  "value": 6500,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "BGC",
+  "default": 0,
+  "enabled": false,
+  "label": "Gamma Function",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 1,
+    "text": "sRGB"
+   },
+   {
+    "idx": 4,
+    "text": "ITU-R BT.1886"
+   },
+   {
+    "idx": 6,
+    "text": "HDR/PQ (SMPTE ST 2084)"
+   },
+   {
+    "idx": 2,
+    "text": "Power Law Function"
+   },
+   {
+    "idx": 7,
+    "text": "HDR/PQ (No Compression)"
+   },
+   {
+    "idx": 3,
+    "text": "Classic"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM+MINL",
+  "decimals": 2,
+  "default": 10,
+  "enabled": false,
+  "label": "Black Offset (nits)",
+  "max": 100000,
+  "min": 0,
+  "type": 201,
+  "value": 10,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM+MAXL",
+  "default": 1000,
+  "enabled": false,
+  "label": "Maximum Luminance (nits)",
+  "max": 2000,
+  "min": 10,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM+MAXM",
+  "default": 1000,
+  "enabled": false,
+  "label": "Content Max Luminance (nits)",
+  "max": 10000,
+  "min": 10,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM+PQWL",
+  "default": 1000,
+  "enabled": false,
+  "label": "White Level (nits)",
+  "max": 2000,
+  "min": 10,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM",
+  "decimals": 3,
+  "default": 2200,
+  "enabled": false,
+  "label": "Gamma Power Value",
+  "max": 3000,
+  "min": 1000,
+  "type": 201,
+  "value": 2200,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "GAM+SLOP",
+  "decimals": 3,
+  "default": 1,
+  "enabled": false,
+  "label": "Gamma Toe Slope",
+  "max": 100,
+  "min": 1,
+  "type": 201,
+  "value": 1,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "ALC",
+  "default": 0,
+  "enabled": false,
+  "label": "Ambient Light Correction",
+  "max": 100,
+  "min": -100,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "LAS+CFCM",
+  "default": 0,
+  "enabled": true,
+  "label": "Camera Friendly Color Mode",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "idx": 1,
+    "text": "On"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Image Settings > Color & Gamma"
+ },
+ {
+  "access": 2,
+  "code": "MMM+IMGA",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/IMGA",
+  "label": "Advanced Image Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+FRDL",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/FRDL",
+  "label": "Frame Delay",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Image Settings > Advanced Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "FRD",
+  "decimals": 3,
+  "default": 2000,
+  "enabled": false,
+  "label": "Set Total Video Delay (Frames)",
+  "max": 3000,
+  "min": 1000,
+  "type": 201,
+  "value": 2000,
+  "path": "Main Menu > Image Settings > Advanced Image Settings > Frame Delay"
+ },
+ {
+  "access": 2,
+  "code": "FRD+STAT",
+  "decimals": 3,
+  "default": 2000,
+  "enabled": false,
+  "label": "Actual Video Delay (Frames)",
+  "max": 3000,
+  "min": 1000,
+  "type": 200,
+  "value": 2000,
+  "path": "Main Menu > Image Settings > Advanced Image Settings > Frame Delay"
+ },
+ {
+  "access": 2,
+  "code": "FRD+TIME",
+  "default": "",
+  "enabled": false,
+  "label": "Actual Video Delay (ms)",
+  "max": 80,
+  "min": 0,
+  "type": 300,
+  "value": "33.33",
+  "path": "Main Menu > Image Settings > Advanced Image Settings > Frame Delay"
+ },
+ {
+  "access": 2,
+  "code": "DTL",
+  "default": 50,
+  "enabled": false,
+  "label": "Sharpness",
+  "max": 100,
+  "min": 0,
+  "type": 201,
+  "value": 50,
+  "path": "Main Menu > Image Settings > Advanced Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "FMD",
+  "default": 1,
+  "enabled": false,
+  "label": "Film Mode Detect",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Disabled"
+   },
+   {
+    "idx": 1,
+    "text": "Auto Detect"
+   }
+  ],
+  "type": 400,
+  "value": 1,
+  "path": "Main Menu > Image Settings > Advanced Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+3DST",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/RESERVED",
+  "label": "Reserved",
+  "type": 302,
+  "value": null,
+  "path": "Main Menu > Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "SOR",
+  "default": 0,
+  "enabled": false,
+  "icon": "menu/SOR",
+  "label": "Image Orientation",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Front Projection"
+   },
+   {
+    "idx": 1,
+    "text": "Rear Projection"
+   },
+   {
+    "idx": 2,
+    "text": "Front Projection Inverted"
+   },
+   {
+    "idx": 3,
+    "text": "Rear Projection Inverted"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Image Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CONF",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/CONF",
+  "label": "Configuration",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "MMM+LENS",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/LENS",
+  "label": "Lens Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "MMC+ZOOM",
+  "default": null,
+  "enabled": false,
+  "label": "Zoom",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMC+FOCS",
+  "default": null,
+  "enabled": false,
+  "label": "Focus",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMC+LNSH",
+  "default": null,
+  "enabled": false,
+  "label": "Lens Offset",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "LCB",
+  "continue": "Calibrate",
+  "default": null,
+  "enabled": false,
+  "label": "Lens Calibration",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "LCB+ZOOM",
+  "continue": "Calibrate Zoom Lens",
+  "default": null,
+  "enabled": false,
+  "label": "Zoom Lens Calibration",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "LCB+LOCK",
+  "default": false,
+  "enabled": true,
+  "label": "Lock all Lens Motors",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "LCB+ZOMR",
+  "default": 1,
+  "enabled": true,
+  "label": "Lens Warnings",
+  "list": [
+   {
+    "idx": 1,
+    "text": "Show All Warnings"
+   },
+   {
+    "idx": 0,
+    "text": "Hide Zoom Motor Warnings"
+   },
+   {
+    "idx": 2,
+    "text": "Hide Detection Warnings"
+   }
+  ],
+  "type": 400,
+  "value": 1,
+  "path": "Main Menu > Configuration > Lens Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+LGHT",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/LGHT",
+  "label": "Light & Output Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "LAS+STAT",
+  "default": 3,
+  "enabled": false,
+  "label": "LiteLOC",
+  "list": [
+   {
+    "idx": 1,
+    "text": "Disabled"
+   },
+   {
+    "idx": 3,
+    "text": "Enabled"
+   }
+  ],
+  "type": 400,
+  "value": 3,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "LAS+POWR",
+  "decimals": 1,
+  "default": 750,
+  "enabled": true,
+  "label": "Brightness",
+  "max": 1000,
+  "min": 0,
+  "softmax": 1000,
+  "softmin": 200,
+  "softvalue": 600,
+  "type": 204,
+  "value": 600,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "LAS+WHTX",
+  "decimals": 4,
+  "default": 3127,
+  "enabled": true,
+  "label": "White x",
+  "max": 4500,
+  "min": 2500,
+  "type": 200,
+  "value": 3127,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "LAS+WHTY",
+  "decimals": 4,
+  "default": 3290,
+  "enabled": true,
+  "label": "White y",
+  "max": 4500,
+  "min": 2500,
+  "type": 200,
+  "value": 3290,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "LAS+CFCM",
+  "default": 0,
+  "enabled": true,
+  "label": "Camera Friendly Color Mode",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "idx": 1,
+    "text": "On"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "RBK+SLCT",
+  "default": false,
+  "enabled": true,
+  "label": "Enable RealBlack",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "RBK+TIME",
+  "decimals": 1,
+  "default": 5,
+  "enabled": false,
+  "label": "RealBlack Lights Out Timer (Seconds)",
+  "max": 25,
+  "min": 0,
+  "type": 201,
+  "value": 5,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "RBK+LOSL",
+  "default": 0,
+  "enabled": false,
+  "label": "RealBlack Lights Out Signal Level",
+  "max": 255,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Light & Output Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CPRI",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/CPRI",
+  "label": "Color Primary Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "CCA+SLCT",
+  "default": 4,
+  "enabled": false,
+  "label": "Color Correction Mode",
+  "list": [
+   {
+    "idx": 4,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   },
+   {
+    "idx": 3,
+    "text": "Custom"
+   }
+  ],
+  "type": 400,
+  "value": 4,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 2,
+  "code": "CCA+EDTP",
+  "continue": "Edit",
+  "default": null,
+  "enabled": false,
+  "label": "Color Primary Settings",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 2,
+  "code": "CCA+PATT",
+  "default": 255,
+  "enabled": false,
+  "label": "Show Color Pattern",
+  "list": [
+   {
+    "idx": 255,
+    "text": "Auto"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   },
+   {
+    "idx": 0,
+    "text": "White"
+   },
+   {
+    "idx": 7,
+    "text": "Off"
+   }
+  ],
+  "type": 400,
+  "value": 255,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+RDPX",
+  "decimals": 4,
+  "default": 7182,
+  "enabled": false,
+  "label": "Red x",
+  "max": 7500,
+  "min": 5000,
+  "type": 200,
+  "value": 7182,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+RDPY",
+  "decimals": 4,
+  "default": 2793,
+  "enabled": false,
+  "label": "Red y",
+  "max": 4500,
+  "min": 2500,
+  "type": 200,
+  "value": 2793,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+GNPX",
+  "decimals": 4,
+  "default": 1063,
+  "enabled": false,
+  "label": "Green x",
+  "max": 4500,
+  "min": 1,
+  "type": 200,
+  "value": 1063,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+GNPY",
+  "decimals": 4,
+  "default": 8197,
+  "enabled": false,
+  "label": "Green y",
+  "max": 8500,
+  "min": 5000,
+  "type": 200,
+  "value": 8197,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+BLPX",
+  "decimals": 4,
+  "default": 1354,
+  "enabled": false,
+  "label": "Blue x",
+  "max": 2500,
+  "min": 500,
+  "type": 200,
+  "value": 1354,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+BLPY",
+  "decimals": 4,
+  "default": 420,
+  "enabled": false,
+  "label": "Blue y",
+  "max": 2500,
+  "min": 1,
+  "type": 200,
+  "value": 420,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+WHPX",
+  "decimals": 4,
+  "default": 3091,
+  "enabled": false,
+  "label": "White x",
+  "max": 4500,
+  "min": 2500,
+  "type": 200,
+  "value": 3091,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+WHPY",
+  "decimals": 4,
+  "default": 3291,
+  "enabled": false,
+  "label": "White y",
+  "max": 4500,
+  "min": 2500,
+  "type": 200,
+  "value": 3291,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 6,
+  "code": "CCA+RSET",
+  "continue": "Reset",
+  "default": null,
+  "enabled": false,
+  "label": "Reset Color Primaries",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Color Primary Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CU1D",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/CU1D",
+  "label": "Horizontal 1D Color Uniformity",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "CUC+SLCT",
+  "default": 0,
+  "enabled": false,
+  "label": "Color Uniformity Mode",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Color Uniformity Off"
+   },
+   {
+    "idx": 1,
+    "text": "Horizontal 1D Color Uniformity"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CCA+SLCT",
+  "default": 4,
+  "enabled": false,
+  "label": "Color Correction Mode",
+  "list": [
+   {
+    "idx": 4,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   },
+   {
+    "idx": 3,
+    "text": "Custom"
+   }
+  ],
+  "type": 400,
+  "value": 4,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CCA+PATT",
+  "default": 255,
+  "enabled": false,
+  "label": "Show Color Pattern",
+  "list": [
+   {
+    "idx": 255,
+    "text": "Auto"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   },
+   {
+    "idx": 0,
+    "text": "White"
+   },
+   {
+    "idx": 7,
+    "text": "Off"
+   }
+  ],
+  "type": 400,
+  "value": 255,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H1RL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Luminance at P15",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H1GL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Luminance at P15",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H1BL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Luminance at P15",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H2RL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Luminance at P2",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H2GL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Luminance at P2",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H2BL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Luminance at P2",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3RL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Luminance at P5",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3RX",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Red x at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3RY",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Red y at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3GL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Luminance at P5",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3GX",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Green x at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3GY",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Green y at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3BL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Luminance at P5",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3BX",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue x at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H3BY",
+  "decimals": 4,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue y at P5",
+  "max": 9999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H4RL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Luminance at P8",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H4GL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Luminance at P8",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H4BL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Luminance at P8",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H5RL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Luminance at P16",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H5GL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Luminance at P16",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "CUC+H5BL",
+  "decimals": 2,
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Luminance at P16",
+  "max": 9999999,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Horizontal 1D Color Uniformity"
+ },
+ {
+  "access": 2,
+  "code": "MMM+INPT",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/INPT",
+  "label": "Input Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "CAV+MODE",
+  "default": 0,
+  "enabled": false,
+  "label": "Video Input Configuration",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Default"
+   },
+   {
+    "idx": 1,
+    "text": "SDVOE"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMC+PCFG",
+  "default": null,
+  "enabled": false,
+  "label": "Input Port Configuration",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "EDO",
+  "default": 60,
+  "enabled": false,
+  "label": "EDID Timing",
+  "list": [
+   {
+    "idx": 24,
+    "text": "24Hz"
+   },
+   {
+    "idx": 25,
+    "text": "25Hz"
+   },
+   {
+    "idx": 30,
+    "text": "30Hz"
+   },
+   {
+    "idx": 50,
+    "text": "50Hz"
+   },
+   {
+    "idx": 60,
+    "text": "60Hz (Default)"
+   }
+  ],
+  "type": 400,
+  "value": 60,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "FIB+SLTA",
+  "default": false,
+  "enabled": false,
+  "label": "Reserved",
+  "max": 1,
+  "min": 0,
+  "type": 302,
+  "value": false,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "FIB+SLTB",
+  "default": false,
+  "enabled": false,
+  "label": "Reserved",
+  "max": 1,
+  "min": 0,
+  "type": 302,
+  "value": false,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "VOE+SLTA",
+  "continue": "Restore",
+  "default": null,
+  "enabled": false,
+  "label": "Restore SDVoE Settings",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "VOE+SLTB",
+  "default": null,
+  "enabled": false,
+  "label": "Reserved",
+  "type": 302,
+  "value": null,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "VOE+EDID",
+  "continue": "Copy",
+  "default": null,
+  "enabled": false,
+  "label": "Copy EDID to Terra",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "CHL+INPT",
+  "default": 0,
+  "enabled": false,
+  "label": "Christie Link I/O Configuration",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Input/Loop Out"
+   },
+   {
+    "idx": 1,
+    "text": "Christie Link 1"
+   },
+   {
+    "idx": 2,
+    "text": "Christie Link 2"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMC+EDID",
+  "default": null,
+  "enabled": false,
+  "label": "Manage Custom EDID Files",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "EDC+HDCV",
+  "default": 0,
+  "enabled": false,
+  "label": "HDMI 2.0 Port 1 and 2 EDID",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Default EDID"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "EDC+DPCV",
+  "default": 0,
+  "enabled": false,
+  "label": "DisplayPort 1.2 Port 1 and 2 EDID",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Default EDID"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "EDC+HDVO",
+  "default": 0,
+  "enabled": false,
+  "label": "HDMI 2.1 Port 3 EDID",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Default EDID"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "EDC+DPVO",
+  "default": 0,
+  "enabled": false,
+  "label": "DisplayPort 1.4 Port 3 and 4 EDID",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Default EDID"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Input Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+GEOM",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/GEOM",
+  "label": "Geometry Correction",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "WRP+SLCT",
+  "default": 0,
+  "enabled": false,
+  "label": "Geometry Correction Mode",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "idx": 11,
+    "text": "Keystone"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "MMC+KEY2",
+  "default": null,
+  "enabled": false,
+  "label": "2D Keystone Correction",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "MMC+KEYV",
+  "default": null,
+  "enabled": false,
+  "label": "Vertical Keystone Correction",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "MMC+KEYH",
+  "default": null,
+  "enabled": false,
+  "label": "Horizontal Keystone Correction",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "WRP+KRST",
+  "continue": "Reset",
+  "default": null,
+  "enabled": false,
+  "label": "Reset Keystone Correction",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "WRP+KGAN",
+  "default": false,
+  "enabled": false,
+  "label": "Keystone Gain Compensation",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "TWE",
+  "default": false,
+  "enabled": false,
+  "label": "Disable Optimization",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Geometry Correction"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CAXY",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/CAXY",
+  "label": "Color Correction by x,y",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "CCA+SLCT",
+  "default": 4,
+  "enabled": false,
+  "label": "Color Correction Mode",
+  "list": [
+   {
+    "idx": 4,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   },
+   {
+    "idx": 3,
+    "text": "Custom"
+   }
+  ],
+  "type": 400,
+  "value": 4,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+EDIT",
+  "continue": "Edit",
+  "default": null,
+  "enabled": false,
+  "label": "Custom Color Correction",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+PATT",
+  "default": 255,
+  "enabled": false,
+  "label": "Show Color Pattern",
+  "list": [
+   {
+    "idx": 255,
+    "text": "Auto"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   },
+   {
+    "idx": 0,
+    "text": "White"
+   },
+   {
+    "idx": 7,
+    "text": "Off"
+   }
+  ],
+  "type": 400,
+  "value": 255,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+COPY",
+  "default": 0,
+  "enabled": false,
+  "label": "Copy From",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+RDCX",
+  "decimals": 4,
+  "default": 7182,
+  "enabled": false,
+  "label": "Red x",
+  "max": 7500,
+  "min": 5000,
+  "type": 201,
+  "value": 7182,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+RDCY",
+  "decimals": 4,
+  "default": 2793,
+  "enabled": false,
+  "label": "Red y",
+  "max": 4500,
+  "min": 2500,
+  "type": 201,
+  "value": 2793,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GNCX",
+  "decimals": 4,
+  "default": 1063,
+  "enabled": false,
+  "label": "Green x",
+  "max": 4500,
+  "min": 1,
+  "type": 201,
+  "value": 1063,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GNCY",
+  "decimals": 4,
+  "default": 8197,
+  "enabled": false,
+  "label": "Green y",
+  "max": 8500,
+  "min": 5000,
+  "type": 201,
+  "value": 8197,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BLCX",
+  "decimals": 4,
+  "default": 1354,
+  "enabled": false,
+  "label": "Blue x",
+  "max": 2500,
+  "min": 500,
+  "type": 201,
+  "value": 1354,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BLCY",
+  "decimals": 4,
+  "default": 420,
+  "enabled": false,
+  "label": "Blue y",
+  "max": 2500,
+  "min": 1,
+  "type": 201,
+  "value": 420,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+WHCX",
+  "decimals": 4,
+  "default": 3091,
+  "enabled": false,
+  "label": "White x",
+  "max": 4500,
+  "min": 2500,
+  "type": 201,
+  "value": 3091,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "CCA+WHCY",
+  "decimals": 4,
+  "default": 3291,
+  "enabled": false,
+  "label": "White y",
+  "max": 4500,
+  "min": 2500,
+  "type": 201,
+  "value": 3291,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "LAS+POWR",
+  "decimals": 1,
+  "default": 750,
+  "enabled": true,
+  "label": "Brightness",
+  "max": 1000,
+  "min": 0,
+  "softmax": 1000,
+  "softmin": 200,
+  "softvalue": 600,
+  "type": 204,
+  "value": 600,
+  "path": "Main Menu > Configuration > Color Correction by x,y"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CSAT",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/CSAT",
+  "label": "Color Saturation",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "CCA+SLCT",
+  "default": 4,
+  "enabled": false,
+  "label": "Color Correction Mode",
+  "list": [
+   {
+    "idx": 4,
+    "text": "Auto Detect"
+   },
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   },
+   {
+    "idx": 3,
+    "text": "Custom"
+   }
+  ],
+  "type": 400,
+  "value": 4,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+EDIT",
+  "continue": "Edit",
+  "default": null,
+  "enabled": false,
+  "label": "Custom Color Correction",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+PATT",
+  "default": 255,
+  "enabled": false,
+  "label": "Show Color Pattern",
+  "list": [
+   {
+    "idx": 255,
+    "text": "Auto"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   },
+   {
+    "idx": 0,
+    "text": "White"
+   },
+   {
+    "idx": 7,
+    "text": "Off"
+   }
+  ],
+  "type": 400,
+  "value": 255,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+COPY",
+  "default": 0,
+  "enabled": false,
+  "label": "Copy From",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Max Drives"
+   },
+   {
+    "idx": 1,
+    "text": "Color Temperature"
+   },
+   {
+    "idx": 2,
+    "text": "Rec. 709"
+   },
+   {
+    "idx": 5,
+    "text": "DCI P3"
+   },
+   {
+    "idx": 6,
+    "text": "DCI P3 (D65)"
+   },
+   {
+    "idx": 7,
+    "text": "Rec. 2020"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+ROFR",
+  "default": 1000,
+  "enabled": false,
+  "label": "Red Part of Red",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GOFR",
+  "default": 0,
+  "enabled": false,
+  "label": "Green Part of Red",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BOFR",
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Part of Red",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GOFG",
+  "default": 1000,
+  "enabled": false,
+  "label": "Green Part of Green",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+ROFG",
+  "default": 0,
+  "enabled": false,
+  "label": "Red Part of Green",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BOFG",
+  "default": 0,
+  "enabled": false,
+  "label": "Blue Part of Green",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BOFB",
+  "default": 1000,
+  "enabled": false,
+  "label": "Blue Part of Blue",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+ROFB",
+  "default": 0,
+  "enabled": false,
+  "label": "Red Part of Blue",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GOFB",
+  "default": 0,
+  "enabled": false,
+  "label": "Green Part of Blue",
+  "max": 1000,
+  "min": -1000,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+ROFW",
+  "default": 1000,
+  "enabled": false,
+  "label": "Red Part of White",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+GOFW",
+  "default": 1000,
+  "enabled": false,
+  "label": "Green Part of White",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "CCA+BOFW",
+  "default": 1000,
+  "enabled": false,
+  "label": "Blue Part of White",
+  "max": 1000,
+  "min": 0,
+  "type": 201,
+  "value": 1000,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "LAS+POWR",
+  "decimals": 1,
+  "default": 750,
+  "enabled": true,
+  "label": "Brightness",
+  "max": 1000,
+  "min": 0,
+  "softmax": 1000,
+  "softmin": 200,
+  "softvalue": 600,
+  "type": 204,
+  "value": 600,
+  "path": "Main Menu > Configuration > Color Saturation"
+ },
+ {
+  "access": 2,
+  "code": "MMM+EDGB",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/EDGB",
+  "label": "Edge Blending",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "EBL+SLCT",
+  "default": 0,
+  "enabled": false,
+  "label": "Edge Blending",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "idx": 11,
+    "text": "Basic"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Edge Blending"
+ },
+ {
+  "access": 2,
+  "code": "MMC+EBLB",
+  "default": null,
+  "enabled": false,
+  "label": "Edge Blend Widths",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Edge Blending"
+ },
+ {
+  "access": 2,
+  "code": "LAS+POWR",
+  "decimals": 1,
+  "default": 750,
+  "enabled": true,
+  "label": "Brightness",
+  "max": 1000,
+  "min": 0,
+  "softmax": 1000,
+  "softmin": 200,
+  "softvalue": 600,
+  "type": 204,
+  "value": 600,
+  "path": "Main Menu > Configuration > Edge Blending"
+ },
+ {
+  "access": 2,
+  "code": "EBL+BRST",
+  "continue": "Reset",
+  "default": null,
+  "enabled": false,
+  "label": "Reset Edge Blends",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Edge Blending"
+ },
+ {
+  "access": 2,
+  "code": "MMM+BLBM",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/BLBM",
+  "label": "Black Level Blending",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "EBB+SLCT",
+  "default": 0,
+  "enabled": false,
+  "label": "Black Level Blend Mode",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "idx": 11,
+    "text": "Basic"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "EBB+PATT",
+  "default": true,
+  "enabled": false,
+  "label": "Auto-Show Black Pattern",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "MMC+EBBB",
+  "default": null,
+  "enabled": false,
+  "label": "Black Level Blend Widths",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "MMC+EBBO",
+  "default": null,
+  "enabled": false,
+  "label": "Black Level Blend Offset",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "SHU+BLND",
+  "default": false,
+  "enabled": false,
+  "label": "Keep Blend During Shuttering",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "VID+BLND",
+  "default": false,
+  "enabled": false,
+  "label": "Keep Blend During Input Switching",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "EBB+BRST",
+  "continue": "Reset",
+  "default": null,
+  "enabled": false,
+  "label": "Reset Black Level Blends",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "BLO+SLCT",
+  "default": true,
+  "enabled": false,
+  "label": "Black Level Offset Adjustment",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "BLO+REDO",
+  "default": 4,
+  "enabled": false,
+  "label": "Black Level Offset Red",
+  "max": 100,
+  "min": 0,
+  "type": 201,
+  "value": 4,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "BLO+GRNO",
+  "default": 0,
+  "enabled": false,
+  "label": "Black Level Offset Green",
+  "max": 100,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "BLO+BLUO",
+  "default": 2,
+  "enabled": false,
+  "label": "Black Level Offset Blue",
+  "max": 100,
+  "min": 0,
+  "type": 201,
+  "value": 2,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 6,
+  "code": "BLO+CALI",
+  "continue": "Save",
+  "default": null,
+  "enabled": false,
+  "label": "Save to Factory Defaults",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Black Level Blending"
+ },
+ {
+  "access": 2,
+  "code": "MMM+BLNK",
+  "default": null,
+  "enabled": false,
+  "icon": "menu/BLNK",
+  "label": "Blanking",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "BLK+TOPP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Top Blank",
+  "max": 250,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Blanking"
+ },
+ {
+  "access": 2,
+  "code": "BLK+BOTP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Bottom Blank",
+  "max": 250,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Blanking"
+ },
+ {
+  "access": 2,
+  "code": "BLK+LFTP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Left Blank",
+  "max": 250,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Blanking"
+ },
+ {
+  "access": 2,
+  "code": "BLK+RGTP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Right Blank",
+  "max": 250,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Configuration > Blanking"
+ },
+ {
+  "access": 2,
+  "code": "BLK+RSTP",
+  "continue": "Reset",
+  "default": null,
+  "enabled": false,
+  "label": "Reset Blanking",
+  "type": 500,
+  "value": null,
+  "path": "Main Menu > Configuration > Blanking"
+ },
+ {
+  "access": 2,
+  "code": "MMM+CONV",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/CONV",
+  "label": "Convergence",
+  "type": 601,
+  "value": null,
+  "path": "Main Menu > Configuration"
+ },
+ {
+  "access": 2,
+  "code": "MMM+COMM",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/COMM",
+  "label": "Communications",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "MMM+PCOM",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/PCOM",
+  "label": "Projector Communications",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Communications"
+ },
+ {
+  "access": 2,
+  "code": "ADR",
+  "default": 0,
+  "enabled": true,
+  "label": "Projector ID",
+  "max": 999,
+  "min": 0,
+  "type": 200,
+  "value": 0,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 5,
+  "code": "BDR+PRTA",
+  "default": 6,
+  "enabled": true,
+  "label": "Baud Rate (RS232 IN)",
+  "list": [
+   {
+    "idx": 1,
+    "text": "2400"
+   },
+   {
+    "idx": 2,
+    "text": "9600"
+   },
+   {
+    "idx": 3,
+    "text": "19200"
+   },
+   {
+    "idx": 4,
+    "text": "38400"
+   },
+   {
+    "idx": 5,
+    "text": "57600"
+   },
+   {
+    "idx": 6,
+    "text": "115200"
+   }
+  ],
+  "type": 400,
+  "value": 6,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 2,
+  "code": "NTR",
+  "default": 0,
+  "enabled": true,
+  "label": "Network Routing",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Separate"
+   },
+   {
+    "idx": 2,
+    "text": "RS232 and Ethernet Joined"
+   },
+   {
+    "idx": 3,
+    "text": "All Joined"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 2,
+  "code": "KEN+FRNT",
+  "default": true,
+  "enabled": true,
+  "label": "Front IR Enabled",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 2,
+  "code": "KEN+REAR",
+  "default": true,
+  "enabled": true,
+  "label": "Rear IR Enabled",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 2,
+  "code": "KEN+WIRE",
+  "default": true,
+  "enabled": true,
+  "label": "Wired Keypad Enabled",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Communications > Projector Communications"
+ },
+ {
+  "access": 2,
+  "code": "MMM+NETW",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/NETW",
+  "label": "Network Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Communications"
+ },
+ {
+  "access": 2,
+  "code": "MMC+NETA",
+  "default": null,
+  "enabled": true,
+  "label": "IP Settings",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Communications > Network Settings"
+ },
+ {
+  "access": 5,
+  "code": "NET+HOST",
+  "default": "Christie-M-4K25-RGB-000000000",
+  "enabled": true,
+  "label": "Device Name",
+  "max": 63,
+  "min": 0,
+  "type": 300,
+  "value": "Christie-M-4K25-RGB-000000000",
+  "path": "Main Menu > Communications > Network Settings"
+ },
+ {
+  "access": 5,
+  "code": "NET+MAC0",
+  "default": "00:00:00:00:00:00",
+  "enabled": false,
+  "label": "MAC Address",
+  "max": 17,
+  "min": 17,
+  "type": 300,
+  "value": "00:00:00:00:00:00",
+  "path": "Main Menu > Communications > Network Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+SNMP",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/SNMP",
+  "label": "SNMP",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Communications"
+ },
+ {
+  "access": 2,
+  "code": "SNM+READ",
+  "default": "private",
+  "enabled": true,
+  "label": "SNMP Read Community",
+  "max": 32,
+  "min": 0,
+  "type": 300,
+  "value": "private",
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "SNM+TIP1",
+  "default": "0.0.0.0",
+  "enabled": true,
+  "label": "Trap IP Address 1",
+  "max": 15,
+  "min": 7,
+  "type": 306,
+  "value": "0.0.0.0",
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "SNM+TIP2",
+  "default": "0.0.0.0",
+  "enabled": true,
+  "label": "Trap IP Address 2",
+  "max": 15,
+  "min": 7,
+  "type": 306,
+  "value": "0.0.0.0",
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "SNM+TIP3",
+  "default": "0.0.0.0",
+  "enabled": true,
+  "label": "Trap IP Address 3",
+  "max": 15,
+  "min": 7,
+  "type": 306,
+  "value": "0.0.0.0",
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "MMC+MIBL",
+  "default": null,
+  "enabled": true,
+  "label": "SNMP MIB Files",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "MMM+TRAP",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/TRAP",
+  "label": "Trap Configuration",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Communications > SNMP"
+ },
+ {
+  "access": 2,
+  "code": "SNM+STAL",
+  "default": false,
+  "enabled": true,
+  "label": "Fan Stall",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "SNM+THRM",
+  "default": false,
+  "enabled": true,
+  "label": "Thermal Sensors",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "SNM+POWR",
+  "default": false,
+  "enabled": true,
+  "label": "Power",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "SNM+SIGN",
+  "default": false,
+  "enabled": true,
+  "label": "Video Signal",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "SNM+LOSL",
+  "default": false,
+  "enabled": true,
+  "label": "LOS Life",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "SNM+LGHT",
+  "default": false,
+  "enabled": true,
+  "label": "LOS Fault",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > SNMP > Trap Configuration"
+ },
+ {
+  "access": 2,
+  "code": "MMM+DMXS",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/DMXS",
+  "label": "Art-Net Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Communications"
+ },
+ {
+  "access": 2,
+  "code": "DMX+ENBL",
+  "default": false,
+  "enabled": true,
+  "label": "Enable Art-Net",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Communications > Art-Net Settings"
+ },
+ {
+  "access": 2,
+  "code": "DMX+SUBN",
+  "default": 0,
+  "enabled": true,
+  "label": "Art-Net Subnet",
+  "max": 15,
+  "min": 0,
+  "type": 200,
+  "value": 0,
+  "path": "Main Menu > Communications > Art-Net Settings"
+ },
+ {
+  "access": 2,
+  "code": "DMX+UNVS",
+  "default": 0,
+  "enabled": true,
+  "label": "Art-Net Universe",
+  "max": 15,
+  "min": 0,
+  "type": 200,
+  "value": 0,
+  "path": "Main Menu > Communications > Art-Net Settings"
+ },
+ {
+  "access": 2,
+  "code": "DMX+CHAN",
+  "default": 1,
+  "enabled": true,
+  "label": "Base Channel",
+  "max": 488,
+  "min": 1,
+  "type": 200,
+  "value": 1,
+  "path": "Main Menu > Communications > Art-Net Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+SETT",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/SETT",
+  "label": "System Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "MMM+TIME",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/TIME",
+  "label": "Date & Time",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > System Settings"
+ },
+ {
+  "access": 4,
+  "code": "TMD+TIME",
+  "default": "",
+  "enabled": true,
+  "label": "Time",
+  "max": 8,
+  "min": 8,
+  "type": 305,
+  "value": "14:57:39",
+  "path": "Main Menu > System Settings > Date & Time"
+ },
+ {
+  "access": 4,
+  "code": "TMD+DATE",
+  "default": "",
+  "enabled": true,
+  "label": "Date",
+  "max": 10,
+  "min": 10,
+  "type": 304,
+  "value": "2026/09/20",
+  "path": "Main Menu > System Settings > Date & Time"
+ },
+ {
+  "access": 2,
+  "code": "MMM+POWR",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/POWR",
+  "label": "Power Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > System Settings"
+ },
+ {
+  "access": 2,
+  "code": "APW",
+  "default": false,
+  "enabled": true,
+  "label": "Auto Power Up",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > System Settings > Power Settings"
+ },
+ {
+  "access": 2,
+  "code": "PWR+ELEC",
+  "default": false,
+  "enabled": true,
+  "label": "Keep Electronics On In Standby",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > System Settings > Power Settings"
+ },
+ {
+  "access": 2,
+  "code": "STH+MODE",
+  "default": false,
+  "enabled": true,
+  "label": "Stealth Mode",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > System Settings > Power Settings"
+ },
+ {
+  "access": 2,
+  "code": "TMC+MODE",
+  "default": 0,
+  "enabled": true,
+  "label": "Fan Speed Profile",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Standard"
+   },
+   {
+    "idx": 1,
+    "text": "Quiet"
+   },
+   {
+    "idx": 2,
+    "text": "Performance"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > System Settings > Power Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+LOGO",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/LOGO",
+  "label": "Splash Screen Settings",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > System Settings"
+ },
+ {
+  "access": 2,
+  "code": "SPS+COLR",
+  "default": 7,
+  "enabled": false,
+  "label": "Background Color (No-Signal)",
+  "list": [
+   {
+    "idx": 7,
+    "text": "Black"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   }
+  ],
+  "type": 400,
+  "value": 7,
+  "path": "Main Menu > System Settings > Splash Screen Settings"
+ },
+ {
+  "access": 2,
+  "code": "MMM+MENU",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/MENU",
+  "label": "Menu Preferences",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > System Settings"
+ },
+ {
+  "access": 2,
+  "code": "LOC+LANG",
+  "default": 0,
+  "enabled": true,
+  "icon": "menu/LOC+LANG",
+  "label": "Language",
+  "list": [
+   {
+    "idx": 0,
+    "text": "English"
+   },
+   {
+    "idx": 1,
+    "text": "Français"
+   },
+   {
+    "idx": 2,
+    "text": "Deutsch"
+   },
+   {
+    "idx": 3,
+    "text": "Español"
+   },
+   {
+    "idx": 4,
+    "text": "Italiano"
+   },
+   {
+    "idx": 5,
+    "text": "中文"
+   },
+   {
+    "idx": 6,
+    "text": "日本語"
+   },
+   {
+    "idx": 7,
+    "text": "한국어"
+   },
+   {
+    "idx": 8,
+    "text": "Pусский"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > System Settings > Menu Preferences"
+ },
+ {
+  "access": 2,
+  "code": "MSP",
+  "default": 0,
+  "enabled": true,
+  "label": "OSD Position",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Top-Left"
+   },
+   {
+    "idx": 1,
+    "text": "Top-Center"
+   },
+   {
+    "idx": 2,
+    "text": "Top-Right"
+   },
+   {
+    "idx": 3,
+    "text": "Center-Left"
+   },
+   {
+    "idx": 4,
+    "text": "Center"
+   },
+   {
+    "idx": 5,
+    "text": "Center-Right"
+   },
+   {
+    "idx": 6,
+    "text": "Bottom-Left"
+   },
+   {
+    "idx": 7,
+    "text": "Bottom-Center"
+   },
+   {
+    "idx": 8,
+    "text": "Bottom-Right"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > System Settings > Menu Preferences"
+ },
+ {
+  "access": 2,
+  "code": "LOC+TEMP",
+  "default": 0,
+  "enabled": true,
+  "label": "Temperature Units",
+  "list": [
+   {
+    "idx": 0,
+    "text": "Celsius"
+   },
+   {
+    "idx": 1,
+    "text": "Fahrenheit"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > System Settings > Menu Preferences"
+ },
+ {
+  "access": 2,
+  "code": "MMM+ADMN",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/ADMN",
+  "label": "Admin",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "MMM+SERV",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/SERV",
+  "label": "Service",
+  "type": 602,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMM+BKRS",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/BKRS",
+  "label": "Backup & Restore",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMC+BKUP",
+  "default": null,
+  "enabled": true,
+  "label": "Backup to USB",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin > Backup & Restore"
+ },
+ {
+  "access": 2,
+  "code": "MMC+RSTR",
+  "default": null,
+  "enabled": true,
+  "label": "Restore from USB",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin > Backup & Restore"
+ },
+ {
+  "access": 2,
+  "code": "MMC+DFLT",
+  "default": null,
+  "enabled": true,
+  "label": "Reset Projector Defaults",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin > Backup & Restore"
+ },
+ {
+  "access": 2,
+  "code": "MMM+PROF",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/PROF",
+  "label": "Projector Profiles",
+  "type": 601,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMM+DIAG",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/DIAG",
+  "label": "Diagnostics",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "FRZ",
+  "default": false,
+  "enabled": false,
+  "label": "Freeze Image",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "CLE",
+  "default": 0,
+  "enabled": false,
+  "label": "Color Enable",
+  "list": [
+   {
+    "idx": 0,
+    "text": "White"
+   },
+   {
+    "idx": 1,
+    "text": "Red"
+   },
+   {
+    "idx": 2,
+    "text": "Green"
+   },
+   {
+    "idx": 3,
+    "text": "Blue"
+   },
+   {
+    "idx": 4,
+    "text": "Yellow"
+   },
+   {
+    "idx": 5,
+    "text": "Cyan"
+   },
+   {
+    "idx": 6,
+    "text": "Magenta"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP",
+  "default": 0,
+  "enabled": false,
+  "icon": "menu/ITP",
+  "label": "Test Pattern",
+  "list": [
+   {
+    "icon": "tp/noPattern",
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "icon": "tp/grid",
+    "idx": 1,
+    "text": "Grid"
+   },
+   {
+    "icon": "tp/grayscale",
+    "idx": 2,
+    "text": "Gray Scale 16"
+   },
+   {
+    "icon": "tp/white",
+    "idx": 3,
+    "text": "Flat White"
+   },
+   {
+    "icon": "tp/gray",
+    "idx": 4,
+    "text": "Flat Gray"
+   },
+   {
+    "icon": "tp/black",
+    "idx": 5,
+    "text": "Flat Black"
+   },
+   {
+    "icon": "tp/checker",
+    "idx": 6,
+    "text": "Checker"
+   },
+   {
+    "icon": "tp/17point",
+    "idx": 7,
+    "text": "17 Point"
+   },
+   {
+    "icon": "tp/edgeblend",
+    "idx": 8,
+    "text": "Edge Blend"
+   },
+   {
+    "icon": "tp/colorbars",
+    "idx": 9,
+    "text": "Color Bars"
+   },
+   {
+    "icon": "tp/multiColor",
+    "idx": 10,
+    "text": "Multi-color"
+   },
+   {
+    "icon": "tp/rgbwRamp",
+    "idx": 11,
+    "text": "RGBW Ramp"
+   },
+   {
+    "icon": "tp/horizontalRamp",
+    "idx": 12,
+    "text": "Horizontal Ramp"
+   },
+   {
+    "icon": "tp/verticalRamp",
+    "idx": 13,
+    "text": "Vertical Ramp"
+   },
+   {
+    "icon": "tp/diagonalRamp",
+    "idx": 14,
+    "text": "Diagonal Ramp"
+   },
+   {
+    "icon": "tp/squareGrid",
+    "idx": 15,
+    "text": "Square Grid"
+   },
+   {
+    "icon": "tp/diagonalGrid",
+    "idx": 16,
+    "text": "Diagonal Grid"
+   },
+   {
+    "icon": "tp/prismConvergence",
+    "idx": 18,
+    "text": "Prism / Convergence"
+   },
+   {
+    "icon": "tp/boresightRaptor",
+    "idx": 21,
+    "text": "Boresight"
+   },
+   {
+    "icon": "tp/integratorRodRaptor",
+    "idx": 23,
+    "text": "Integrator Rod"
+   },
+   {
+    "icon": "tp/econvergence",
+    "idx": 28,
+    "text": "Electronic Convergence"
+   }
+  ],
+  "type": 410,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+GREY",
+  "default": 2048,
+  "enabled": false,
+  "label": "Test Pattern Gray Level",
+  "max": 4095,
+  "min": 0,
+  "type": 201,
+  "value": 2048,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+RMPM",
+  "default": 0,
+  "enabled": false,
+  "label": "Test Pattern Ramp Motion",
+  "max": 100,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+RMPS",
+  "default": 1,
+  "enabled": false,
+  "label": "Test Pattern Ramp Slope",
+  "max": 10,
+  "min": -10,
+  "type": 201,
+  "value": 1,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+RMPL",
+  "default": 0,
+  "enabled": false,
+  "label": "Test Pattern Ramp Level",
+  "max": 4095,
+  "min": 0,
+  "type": 201,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+GRDP",
+  "default": 32,
+  "enabled": false,
+  "label": "Test Pattern Grid Pitch",
+  "max": 127,
+  "min": 2,
+  "type": 201,
+  "value": 32,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+GRDC",
+  "default": true,
+  "enabled": false,
+  "label": "Test Pattern Grid Color",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": true,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "ITP+GRDM",
+  "default": false,
+  "enabled": false,
+  "label": "Test Pattern Grid Motion",
+  "max": 1,
+  "min": 0,
+  "type": 100,
+  "value": false,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "MMC+CUTP",
+  "default": null,
+  "enabled": true,
+  "label": "Manage Custom Test Patterns",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "LAS+REDP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Red Laser Setpoint",
+  "max": 1000,
+  "min": 0,
+  "softmax": 766,
+  "softmin": 300,
+  "type": 203,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "LAS+GRNP",
+  "decimals": 1,
+  "default": 0,
+  "enabled": false,
+  "label": "Green Laser Setpoint",
+  "max": 1000,
+  "min": 0,
+  "softmax": 652,
+  "softmin": 173,
+  "type": 203,
+  "value": 0,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "LAS+BLUP",
+  "decimals": 1,
+  "default": 300,
+  "enabled": false,
+  "label": "Blue Laser Setpoint",
+  "max": 1000,
+  "min": 0,
+  "softmax": 619,
+  "softmin": 200,
+  "type": 203,
+  "value": 300,
+  "path": "Main Menu > Admin > Diagnostics"
+ },
+ {
+  "access": 2,
+  "code": "MMC+UPGR",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/UPGR",
+  "label": "Software",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMC+INTR",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/INTR",
+  "label": "Interrogator",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMC+LCNS",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/LCNS",
+  "label": "Licenses",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMC+PASS",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/PASS",
+  "label": "Remote Password",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMC+ABOT",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/ABOT",
+  "label": "About",
+  "type": 700,
+  "value": null,
+  "path": "Main Menu > Admin"
+ },
+ {
+  "access": 2,
+  "code": "MMM+STAT",
+  "default": null,
+  "enabled": true,
+  "icon": "menu/STAT",
+  "label": "Status",
+  "type": 600,
+  "value": null,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "ITP",
+  "default": 0,
+  "enabled": false,
+  "icon": "menu/ITP",
+  "label": "Test Pattern",
+  "list": [
+   {
+    "icon": "tp/noPattern",
+    "idx": 0,
+    "text": "Off"
+   },
+   {
+    "icon": "tp/grid",
+    "idx": 1,
+    "text": "Grid"
+   },
+   {
+    "icon": "tp/grayscale",
+    "idx": 2,
+    "text": "Gray Scale 16"
+   },
+   {
+    "icon": "tp/white",
+    "idx": 3,
+    "text": "Flat White"
+   },
+   {
+    "icon": "tp/gray",
+    "idx": 4,
+    "text": "Flat Gray"
+   },
+   {
+    "icon": "tp/black",
+    "idx": 5,
+    "text": "Flat Black"
+   },
+   {
+    "icon": "tp/checker",
+    "idx": 6,
+    "text": "Checker"
+   },
+   {
+    "icon": "tp/17point",
+    "idx": 7,
+    "text": "17 Point"
+   },
+   {
+    "icon": "tp/edgeblend",
+    "idx": 8,
+    "text": "Edge Blend"
+   },
+   {
+    "icon": "tp/colorbars",
+    "idx": 9,
+    "text": "Color Bars"
+   },
+   {
+    "icon": "tp/multiColor",
+    "idx": 10,
+    "text": "Multi-color"
+   },
+   {
+    "icon": "tp/rgbwRamp",
+    "idx": 11,
+    "text": "RGBW Ramp"
+   },
+   {
+    "icon": "tp/horizontalRamp",
+    "idx": 12,
+    "text": "Horizontal Ramp"
+   },
+   {
+    "icon": "tp/verticalRamp",
+    "idx": 13,
+    "text": "Vertical Ramp"
+   },
+   {
+    "icon": "tp/diagonalRamp",
+    "idx": 14,
+    "text": "Diagonal Ramp"
+   },
+   {
+    "icon": "tp/squareGrid",
+    "idx": 15,
+    "text": "Square Grid"
+   },
+   {
+    "icon": "tp/diagonalGrid",
+    "idx": 16,
+    "text": "Diagonal Grid"
+   },
+   {
+    "icon": "tp/prismConvergence",
+    "idx": 18,
+    "text": "Prism / Convergence"
+   },
+   {
+    "icon": "tp/boresightRaptor",
+    "idx": 21,
+    "text": "Boresight"
+   },
+   {
+    "icon": "tp/integratorRodRaptor",
+    "idx": 23,
+    "text": "Integrator Rod"
+   },
+   {
+    "icon": "tp/econvergence",
+    "idx": 28,
+    "text": "Electronic Convergence"
+   }
+  ],
+  "type": 410,
+  "value": 0,
+  "path": "Main Menu"
+ },
+ {
+  "access": 2,
+  "code": "LOC+LANG",
+  "default": 0,
+  "enabled": true,
+  "icon": "menu/LOC+LANG",
+  "label": "Language",
+  "list": [
+   {
+    "idx": 0,
+    "text": "English"
+   },
+   {
+    "idx": 1,
+    "text": "Français"
+   },
+   {
+    "idx": 2,
+    "text": "Deutsch"
+   },
+   {
+    "idx": 3,
+    "text": "Español"
+   },
+   {
+    "idx": 4,
+    "text": "Italiano"
+   },
+   {
+    "idx": 5,
+    "text": "中文"
+   },
+   {
+    "idx": 6,
+    "text": "日本語"
+   },
+   {
+    "idx": 7,
+    "text": "한국어"
+   },
+   {
+    "idx": 8,
+    "text": "Pусский"
+   }
+  ],
+  "type": 400,
+  "value": 0,
+  "path": "Main Menu"
+ }
+]

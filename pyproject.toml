@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "christie-mseries"
+version = "1.0.0"
+# Named for the protocol (Christie's M Series serial API), not one model:
+# the wire framing/parsing in client.py comes straight from Christie's own
+# M Series Serial API Commands doc and should hold across the line. Only
+# ChristieM4K25 in projector.py is actually verified, against the TruLife+
+# platform in the M 4K25 RGB specifically -- see README and AGENTS.md.
+description = "Python client for Christie M Series projectors' serial API over TCP"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+dependencies = []
+authors = [{ name = "imsatasia", email = "imsatasia@yahoo.com" }]
+classifiers = [
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Home Automation",
+]
+
+[project.urls]
+Homepage = "https://github.com/imsatasia/py-christie-mseries"
+Issues = "https://github.com/imsatasia/py-christie-mseries/issues"
+
+[project.scripts]
+christie-mseries = "christie_mseries.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0.0", "ruff>=0.8.0", "ty"]
+
+[tool.setuptools.packages.find]
+include = ["christie_mseries*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM"]
+ignore = [
+  "E501",
+  "UP031",  # percent-formatting a (value, name) tuple reads fine as-is
+]
