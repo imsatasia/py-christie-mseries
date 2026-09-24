@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "christie-mseries"
-version = "1.0.0"
+version = "1.1.0"
 # Named for the protocol (Christie's M Series serial API), not one model:
 # the wire framing/parsing in client.py comes straight from Christie's own
 # M Series Serial API Commands doc and should hold across the line. Only
