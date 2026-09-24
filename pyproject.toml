@@ -13,7 +13,7 @@ version = "1.0.0"
 description = "Python client for Christie M Series projectors' serial API over TCP"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = []
 authors = [{ name = "imsatasia", email = "imsatasia@yahoo.com" }]
 classifiers = [
@@ -40,7 +40,7 @@ include = ["christie_mseries*"]
 testpaths = ["tests"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py311"
 line-length = 110
 
 [tool.ruff.lint]
