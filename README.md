@@ -21,6 +21,7 @@ first. See "The control model, and how to find a control" below for why.
 - [The control model, and how to find a control](#the-control-model-and-how-to-find-a-control)
 - [Command coverage](#command-coverage)
 - [Inputs: `SIN`](#inputs-sin)
+- [3D](#3d)
 - [Laser power: `LAS+POWR`](#laser-power-laspowr)
 - [How replies work, and why it bites](#how-replies-work-and-why-it-bites)
 - [Status groups](#status-groups)
@@ -62,6 +63,12 @@ re-run the tests before trusting any code that is not exercised by them:
 python3 examples/dump_menu.py <host> <user> <password> --json > docs/menu-map.json
 git diff docs/menu-map.json      # controls added, removed or re-ranged
 ```
+
+**Dump with the projector powered on.** In standby much of the menu is
+disabled, and a disabled page can be a placeholder rather than the real thing:
+the first map was taken in standby, and its 3D Settings page was a greyed-out
+"Reserved" entry with none of the six 3D controls in it. Powered on, the same
+page lists all of them with their ranges and options (see [3D](#3d)).
 
 **1.3.10**: re-ran the full functional check (power/shutter/brightness/
 LiteLOC/test pattern/lens positions/input/hours, plus a fresh menu dump) —
@@ -130,6 +137,9 @@ christie-mseries 192.0.2.50 input 3                    # by SIN index...
 christie-mseries 192.0.2.50 input "HDMI 2.1 Port 3"    # ...or by label
 christie-mseries 192.0.2.50 shutter open
 christie-mseries 192.0.2.50 test-pattern "Color Bars"
+christie-mseries 192.0.2.50 3d                         # every 3D setting and status
+christie-mseries 192.0.2.50 3d-mode "Side-by-Side 3D"  # also 3d-sync-output, 3d-delay,
+                                                       # 3d-dark-interval, 3d-invert, 3d-test-pattern
 christie-mseries 192.0.2.50 group TEMP      # one status group in full
 christie-mseries 192.0.2.50 probe           # which documented codes exist here
 ```
@@ -164,7 +174,7 @@ python3 examples/dump_menu.py <host> <user> <password> --json > docs/menu-map.js
 ```
 
 **`docs/menu-map.json` is the checked-in result and the reference to read
-first** for any "can it do X?" question: 236 entries covering those 221
+first** for any "can it do X?" question: 247 entries covering those 228
 controls, each with its menu path. Regenerate it after a firmware update.
 Note that `session:connect` returns a session URL that every later call must
 be posted to, or the reply is `invalid Session ID`.
@@ -198,7 +208,7 @@ Codes with a named method:
 | `ITP` | Test Pattern | `get_test_pattern()`, `set_test_pattern()` |
 | `WRP+SLCT` | Geometry Correction | `get_geometry_warp()`, `set_geometry_warp()`, `reset_keystone()` |
 | `ASU` | Auto Setup | `auto_setup()` (write-only) |
-| `TDM` `TDD` `TDN` `TDO` `TDT` `DRK` | 3D | `get_3d_mode()`, `get_3d_emitter_delay()`, `is_3d_input_inverted()`, `get_3d_sync_output()`, `is_3d_test_pattern_enabled()`, `get_3d_dark_interval()` (+ setters) |
+| `TDM` `TDO` `TDD` `DRK` `TDN` `TDT` | 3D | `get_3d_mode()`, `get_3d_sync_output()`, `get_3d_emitter_delay()`, `get_3d_dark_interval()`, `is_3d_input_inverted()`, `is_3d_test_pattern_enabled()` (+ setters), `get_3d_status()` — see [3D](#3d) |
 | `NET` | Network Setup | `get_network()` |
 | `ADR` | Address | `get_address()`, `set_address()` |
 | `PNG` | Ping | `ping()` |
@@ -273,6 +283,73 @@ one won't have them.
 the input can be read then, but only changed once it is on. `snapshot()`
 carries the table for pollers (see below), and its `input_label` falls back to
 the projector's own name for an index that isn't in `INPUTS`.
+
+## 3D
+
+The projector's 3D Settings page holds six controls, all wrapped here:
+
+| Code | Menu label | Method pair | Values |
+|---|---|---|---|
+| `TDM` | 3D Mode | `get_3d_mode()` / `set_3d_mode()` | `THREE_D_MODES`, by number or name |
+| `TDO` | 3D Sync Output | `get_3d_sync_output()` / `set_3d_sync_output()` | `THREE_D_SYNC_OUTPUTS`, by number or name |
+| `TDD` | 3D Sync Delay | `get_3d_emitter_delay()` / `set_3d_emitter_delay()` | −1000 to 1000, default 0 |
+| `DRK` | Dark Interval | `get_3d_dark_interval()` / `set_3d_dark_interval()` | 250 to 3000, default 1500 |
+| `TDN` | Invert Left/Right Eye | `is_3d_input_inverted()` / `set_3d_input_inverted()` | on / off |
+| `TDT` | 3D Test Pattern | `is_3d_test_pattern_enabled()` / `enable_…()` / `disable_…()` | on / off |
+
+plus `get_3d_status()`, which reads the two read-only 3D readings in the `SIGN`
+status group: `3D Sync` (e.g. `Valid HDMI 3D Sync`) and `3D Darktime Status`
+(`Achieved` / `Not Achieved`), both `N/A` when no 3D signal is shown.
+
+The `TDM` modes were read back from the unit after setting each value:
+
+| Value | Name |
+|---|---|
+| 0 | Off |
+| 1 | Auto Detect |
+| 2 | Multi-Flash 3D |
+| 3 | Side-by-Side 3D |
+| 5 | Top-and-Bottom 3D |
+| 6 | Frame Packing 3D |
+
+4 and everything above 6 answer `Invalid Value`. The projector's own menu
+only *offers* the first three, but it accepts the packed formats (3, 5, 6) and
+re-wires the other controls when they are selected, so they are listed. The
+API doc's numbering differs (it calls 1 "Native 3D"), as with test patterns.
+`TDO` is 0 `To Emitter` or 1 `To Next Input`.
+
+**Which controls accept a write depends on the mode.** The projector refuses
+the others with `Disabled Control` (error 105):
+
+| Mode | `TDO`, `TDD`, `DRK` | `TDN` | `TDT` |
+|---|---|---|---|
+| Off, Auto Detect, Multi-Flash | disabled | enabled | enabled |
+| Side-by-Side, Top-and-Bottom, Frame Packing | enabled | disabled | enabled |
+
+`THREE_D_TIMING_MODES` is the set of modes in the second row, and
+`snapshot().three_d_timing` says whether the current mode is one of them. The
+whole page is also disabled while the projector is in standby, like the other
+image controls; reads still work there.
+
+Two behaviours worth knowing:
+
+- **Out-of-range values are clamped, not rejected.** `TDD 1001` reads back as
+  1000 and `DRK 249` as 250. `set_3d_emitter_delay()` and
+  `set_3d_dark_interval()` therefore raise `ValueError` outside the published
+  range rather than let a write quietly become a different one.
+- **The projector volunteers messages nobody asked for.** Lengthening the dark
+  interval makes it send `ERR00000 "System Warning: … 3D Darktime Status = Not
+  Achieved"` and, later, `FYI00000 "… Achieved"`. These are notices, not
+  failed commands, and arrive on the same socket as replies; the client skips
+  them (`is_notice()`) instead of raising for a SET that worked or reading one
+  as the answer to the next query.
+
+The projector publishes **no unit** for `TDD` or `DRK`. Christie's serial doc
+describes hundredths of a millisecond, which does not obviously fit a 15 ms
+default dark interval on a projector running 96 Hz output (a 10.4 ms frame),
+so treat both as raw numbers. Frame Delay (`FRD`) and High Frame Rate
+(`HFR+ENBL`) sit next to 3D in the menus but are not 3D controls and are not
+wrapped.
 
 ## Laser power: `LAS+POWR`
 
@@ -370,6 +447,11 @@ snap.input_label, snap.inputs, snap.input_map  # "HDMI 2.1 Port 3", [labels...],
 snap.brightness, snap.liteloc
 snap.test_pattern, snap.test_patterns, snap.test_pattern_map
 snap.focus, snap.zoom, snap.lens_horizontal, snap.lens_vertical
+snap.three_d_mode, snap.three_d_modes, snap.three_d_mode_map  # "Off", [names...], {name: value}
+snap.three_d_timing  # True in the modes where TDO/TDD/DRK are writable
+snap.three_d_sync_output, snap.three_d_emitter_delay, snap.three_d_dark_interval
+snap.three_d_input_inverted, snap.three_d_test_pattern
+snap.three_d_sync, snap.three_d_darktime  # read-only SIGN readings; "N/A" with no 3D signal
 snap.hours, snap.model, snap.serial, snap.alarms
 snap.intake_temp  # None if unreadable
 ```

@@ -9,11 +9,12 @@ Run with: python3 -m unittest discover -s tests
 
 import unittest
 
-from conftest import FakeSocket
+from conftest import TIMEOUT, FakeSocket
 
 from christie_mseries.client import (
     ChristieClient,
     build_message,
+    is_notice,
     parse_message,
     parse_quoted,
     parse_value,
@@ -237,3 +238,63 @@ class BrightnessTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# Real captures: the projector volunteers these when the 3D dark interval
+# changes (see client.py). The first is a warning, the second informational.
+WARNING = b'(65535 00000 ERR00000 "System Warning: \\(SST+SIGN?054\\) 3D Darktime Status = Not Achieved")'
+FYI = b'(65535 00000 FYI00000 "\\(SST+SIGN?054\\) 3D Darktime Status = Achieved")'
+
+
+class NoticeTests(unittest.TestCase):
+    """Unsolicited ERR00000 / FYI messages are not replies and not errors.
+    Treated as either they fail a SET that worked, or get read as the answer
+    to the next query and shift every later reading."""
+
+    @staticmethod
+    def _client(chunks=()):
+        client = ChristieClient("projector.invalid", timeout=5.0)
+        client._sock = FakeSocket(chunks)
+        return client
+
+    def test_is_notice_recognises_the_warning_and_the_fyi(self):
+        self.assertTrue(is_notice(WARNING.decode()))
+        self.assertTrue(is_notice(FYI.decode()))
+
+    def test_is_notice_does_not_swallow_real_errors_or_replies(self):
+        self.assertFalse(is_notice('(65535 00000 ERR00105 "ITP: Disabled Control")'))
+        self.assertFalse(is_notice('(65535 00000 ERR00101 "TDM+MAIN: Control Not Found")'))
+        self.assertFalse(is_notice('(ITP!000 "Off")'))
+        self.assertFalse(is_notice('(SST+SIGN!"Achieved" "3D Darktime Status")'))
+
+    def test_set_ignores_notices(self):
+        client = self._client([WARNING, FYI])
+        client.set("DRK", data=3000)  # must not raise
+
+    def test_set_still_raises_a_real_error_that_follows_a_notice(self):
+        client = self._client([WARNING, b'(65535 00000 ERR00105 "DRK: Disabled Control")'])
+        with self.assertRaises(ChristieError) as ctx:
+            client.set("DRK", data=3000)
+        self.assertEqual(ctx.exception.code, 105)
+
+    def test_query_skips_notices_ahead_of_the_reply(self):
+        client = self._client([WARNING, FYI, b"(DRK!1500)"])
+        self.assertEqual(client.query_int("DRK"), 1500)
+
+    def test_query_multi_skips_notices_between_items(self):
+        client = self._client(
+            [
+                b'(SST+SIGN!"Locked" "3D Sync")',
+                WARNING,
+                b'(SST+SIGN!"Not Achieved" "3D Darktime Status")',
+                TIMEOUT,
+            ]
+        )
+        self.assertEqual(
+            client.query_multi("SST", subcode="SIGN"),
+            ['"Locked" "3D Sync"', '"Not Achieved" "3D Darktime Status"'],
+        )
+
+    def test_ack_wait_skips_notices(self):
+        client = self._client([WARNING, b"(PWR!001)"])
+        client.set("PWR", data=1, ack=True)  # must not raise

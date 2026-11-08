@@ -17,7 +17,7 @@ LAS+POWR (Brightness) was missed until the menu was read.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import IntEnum
 
 from .client import DEFAULT_PORT, ChristieClient, parse_quoted
@@ -152,6 +152,51 @@ INPUTS = {
 INPUTS_BY_NAME = {name: value for value, name in INPUTS.items()}
 
 
+# TDM values and names, read back from the projector after setting each one.
+# The projector's menu only offers Off, Auto Detect and Multi-Flash 3D (the
+# `list` on TDM in docs/menu-map.json), but it also accepts and reports the
+# three packed formats below, so they are listed here. The API doc's numbering
+# differs from this platform (it calls 1 "Native 3D"). The gaps are real: 4 and
+# everything above 6 are rejected as "Invalid Value".
+THREE_D_MODES = {
+    0: "Off",
+    1: "Auto Detect",
+    2: "Multi-Flash 3D",
+    3: "Side-by-Side 3D",
+    5: "Top-and-Bottom 3D",
+    6: "Frame Packing 3D",
+}
+
+THREE_D_MODES_BY_NAME = {name: value for value, name in THREE_D_MODES.items()}
+
+# Which 3D controls are usable depends on the mode, and the projector enforces
+# it ("Disabled Control") rather than ignoring the write. In these three modes
+# the emitter-timing controls -- TDO sync output, TDD sync delay and DRK dark
+# interval -- are enabled and TDN (invert left/right eye) is not; in Off, Auto
+# Detect and Multi-Flash it is the other way round. TDT (the sync test
+# pattern) works in every mode. Observed by reading the `enabled` flag of each
+# control on the projector's 3D Settings page after selecting every mode.
+THREE_D_TIMING_MODES = frozenset({3, 5, 6})
+
+# TDO values and names, as read back from the projector; 2 is "Invalid Value".
+THREE_D_SYNC_OUTPUTS = {
+    0: "To Emitter",
+    1: "To Next Input",
+}
+
+THREE_D_SYNC_OUTPUTS_BY_NAME = {name: value for value, name in THREE_D_SYNC_OUTPUTS.items()}
+
+# The ranges the projector publishes for TDD ("3D Sync Delay") and DRK ("Dark
+# Interval") on its 3D Settings page. It does not reject a value outside them,
+# it silently clamps (TDD 1001 reads back as 1000, DRK 249 as 250), so the
+# setters refuse out-of-range values instead of letting a write quietly turn
+# into a different one. The projector publishes no unit for either.
+THREE_D_EMITTER_DELAY_MIN = -1000
+THREE_D_EMITTER_DELAY_MAX = 1000
+THREE_D_DARK_INTERVAL_MIN = 250
+THREE_D_DARK_INTERVAL_MAX = 3000
+
+
 class GeometryWarp(IntEnum):
     """WRP+SLCT -- which warp map is active. Values 2-17 select a
     user-loaded Twist warp by slot number; pass a plain int (not this enum)
@@ -196,6 +241,30 @@ class Snapshot:
     lens_horizontal: int
     lens_vertical: int
     intake_temp: float | None = None
+    # 3D. All defaulted so a Snapshot built without them (older callers,
+    # test fixtures) still works; snapshot() always fills them in.
+    three_d_mode: str = "Off"
+    three_d_modes: list[str] = field(default_factory=lambda: list(THREE_D_MODES.values()))
+    three_d_mode_map: dict[str, int] = field(
+        default_factory=lambda: {name: n for n, name in THREE_D_MODES.items()}
+    )
+    # True in the modes where the emitter-timing controls (sync output, sync
+    # delay, dark interval) accept writes and eye inversion does not; see
+    # THREE_D_TIMING_MODES.
+    three_d_timing: bool = False
+    three_d_sync_output: str = "To Emitter"
+    three_d_sync_outputs: list[str] = field(default_factory=lambda: list(THREE_D_SYNC_OUTPUTS.values()))
+    three_d_sync_output_map: dict[str, int] = field(
+        default_factory=lambda: {name: n for n, name in THREE_D_SYNC_OUTPUTS.items()}
+    )
+    three_d_emitter_delay: int = 0
+    three_d_dark_interval: int = 1500
+    three_d_input_inverted: bool = False
+    three_d_test_pattern: bool = False
+    # Read-only 3D readings from the SIGN status group; "N/A" with no 3D
+    # signal, "" if the projector did not report them.
+    three_d_sync: str = ""
+    three_d_darktime: str = ""
 
 
 class ChristieM4K25:
@@ -455,57 +524,103 @@ class ChristieM4K25:
         self._client.set("ASU")
 
     # -- 3D -------------------------------------------------------------------
-    # These take no +MAIN subcode on this platform, unlike the API doc.
+    # These take no +MAIN subcode on this platform, unlike the API doc. Every
+    # name, value and range below was read back from a unit; the six controls
+    # are the ones on the projector's 3D Settings page. That page is greyed out
+    # ("Reserved") while the projector is in standby, and the controls are
+    # rejected as "Disabled Control" then too, like the other image controls.
+    # Within it, which controls accept a write depends on the 3D mode -- see
+    # THREE_D_TIMING_MODES.
 
     def get_3d_mode(self) -> tuple[int, str]:
         """3D processing mode as (value, name) (TDM?), e.g. (1, "Auto
-        Detect"). The doc's value table doesn't match this platform, so the
-        projector's own name for the mode is the reliable half."""
+        Detect"). See THREE_D_MODES for the full list."""
         value, name = self._client.query_value("TDM")
         return int(value or 0), name or ""
 
-    def set_3d_mode(self, mode: int) -> None:
-        """Set the 3D processing mode (TDM). Read get_3d_mode() on a unit
-        already in the mode you want to learn the right number."""
-        self._client.set("TDM", data=mode)
+    def set_3d_mode(self, mode: int | str) -> None:
+        """Set the 3D processing mode (TDM), by value or by name -- pass 0 or
+        "Off" to turn 3D off. See THREE_D_MODES for the values.
+
+        An unknown name raises ValueError without sending anything; an
+        unknown number is left for the projector to reject as "Invalid
+        Value".
+        """
+        if isinstance(mode, str):
+            if mode not in THREE_D_MODES_BY_NAME:
+                raise ValueError(f"Unknown 3D mode {mode!r}; expected one of {sorted(THREE_D_MODES_BY_NAME)}")
+            mode = THREE_D_MODES_BY_NAME[mode]
+        self._client.set("TDM", data=int(mode))
 
     def get_3d_emitter_delay(self) -> int:
-        """3D emitter delay in hundredths of a millisecond (TDD?) -- e.g.
-        2000 = 20.00ms. Corrects cross-talk/color ghosting between active
-        glasses and the projected frames."""
+        """3D sync delay (TDD?), from THREE_D_EMITTER_DELAY_MIN to
+        THREE_D_EMITTER_DELAY_MAX, 0 by default. Shifts the emitter signal
+        against the projected frames to correct cross-talk or colour ghosting
+        with active glasses. The projector publishes no unit; Christie's
+        serial doc (020-100224-11) describes hundredths of a millisecond, which
+        this unit's values do not obviously fit -- treat it as a raw number."""
         return self._client.query_int("TDD")
 
     def set_3d_emitter_delay(self, delay: int) -> None:
-        """Set the 3D emitter delay (TDD). See get_3d_emitter_delay() for units."""
-        self._client.set("TDD", data=delay)
+        """Set the 3D sync delay (TDD). Raises ValueError outside
+        THREE_D_EMITTER_DELAY_MIN..MAX rather than letting the projector clamp
+        it silently. Only accepted in the modes in THREE_D_TIMING_MODES."""
+        if not THREE_D_EMITTER_DELAY_MIN <= delay <= THREE_D_EMITTER_DELAY_MAX:
+            raise ValueError(
+                f"3D sync delay {delay} is outside {THREE_D_EMITTER_DELAY_MIN} to {THREE_D_EMITTER_DELAY_MAX}"
+            )
+        self._client.set("TDD", data=int(delay))
 
     def is_3d_input_inverted(self) -> bool:
-        """True if 3D input inversion is on (TDN?) -- fixes left/right eyes
+        """True if left/right eye inversion is on (TDN?) -- fixes the eyes
         being swapped."""
         return self._client.query_int("TDN") == 1
 
     def set_3d_input_inverted(self, inverted: bool) -> None:
-        """Invert (or un-invert) the 3D input (TDN)."""
+        """Invert (or un-invert) the left and right eyes (TDN). Rejected
+        in the modes in THREE_D_TIMING_MODES."""
         self._client.set("TDN", data=int(inverted))
 
     def get_3d_sync_output(self) -> tuple[int, str]:
-        """3D sync output mode on the GPIO port as (value, name) (TDO?),
-        e.g. (0, "To Emitter")."""
+        """3D sync output as (value, name) (TDO?), e.g. (0, "To Emitter").
+        See THREE_D_SYNC_OUTPUTS."""
         value, name = self._client.query_value("TDO")
         return int(value or 0), name or ""
 
-    def set_3d_sync_output(self, value: int) -> None:
-        """Set the 3D sync output mode (TDO)."""
-        self._client.set("TDO", data=value)
+    def set_3d_sync_output(self, value: int | str) -> None:
+        """Set the 3D sync output (TDO), by value or by name. Only accepted
+        in the modes in THREE_D_TIMING_MODES. An unknown name raises
+        ValueError without sending anything."""
+        if isinstance(value, str):
+            if value not in THREE_D_SYNC_OUTPUTS_BY_NAME:
+                raise ValueError(
+                    f"Unknown 3D sync output {value!r}; expected one of "
+                    f"{sorted(THREE_D_SYNC_OUTPUTS_BY_NAME)}"
+                )
+            value = THREE_D_SYNC_OUTPUTS_BY_NAME[value]
+        self._client.set("TDO", data=int(value))
 
     def get_3d_dark_interval(self) -> int:
-        """3D dark interval in hundredths of a millisecond (DRK?) -- e.g.
-        500 = 5.00ms. Increasing it reduces peak brightness."""
+        """3D dark interval (DRK?), from THREE_D_DARK_INTERVAL_MIN to
+        THREE_D_DARK_INTERVAL_MAX, 1500 by default. Lengthening it gives the
+        glasses longer to switch at the cost of peak brightness. The
+        projector publishes no unit (see get_3d_emitter_delay())."""
         return self._client.query_int("DRK")
 
     def set_3d_dark_interval(self, interval: int) -> None:
-        """Set the 3D dark interval (DRK). See get_3d_dark_interval() for units."""
-        self._client.set("DRK", data=interval)
+        """Set the 3D dark interval (DRK). Raises ValueError outside
+        THREE_D_DARK_INTERVAL_MIN..MAX rather than letting the projector
+        clamp it silently. Only accepted in the modes in THREE_D_TIMING_MODES.
+
+        The projector may answer with a "3D Darktime Status = Not Achieved"
+        warning when the interval is longer than the frame rate allows; the
+        client ignores that notice, and get_3d_status() reports it."""
+        if not THREE_D_DARK_INTERVAL_MIN <= interval <= THREE_D_DARK_INTERVAL_MAX:
+            raise ValueError(
+                f"3D dark interval {interval} is outside {THREE_D_DARK_INTERVAL_MIN} to "
+                f"{THREE_D_DARK_INTERVAL_MAX}"
+            )
+        self._client.set("DRK", data=int(interval))
 
     def is_3d_test_pattern_enabled(self) -> bool:
         """True if the 3D sync test pattern is currently on (TDT?)."""
@@ -519,6 +634,18 @@ class ChristieM4K25:
     def disable_3d_test_pattern(self) -> None:
         """Disable the 3D sync test pattern (TDT 0)."""
         self._client.set("TDT", data=0)
+
+    def get_3d_status(self) -> dict[str, str]:
+        """The two read-only 3D readings in the SIGN status group, as
+        {"sync": ..., "darktime": ...}: "3D Sync" (e.g. "Locked") and "3D
+        Darktime Status" ("Achieved" or "Not Achieved"). Both read "N/A" when
+        no 3D signal is being displayed. An item the projector does not
+        report comes back as an empty string."""
+        signal = self.get_status("SIGN")
+        return {
+            "sync": signal.get("3D Sync", ""),
+            "darktime": signal.get("3D Darktime Status", ""),
+        }
 
     # -- Network / identity ----------------------------------------------------
 
@@ -594,8 +721,8 @@ class ChristieM4K25:
 
     def snapshot(self) -> Snapshot:
         """Gather everything worth polling in one shot: power, shutter,
-        input, brightness, test pattern, lens positions, hours, identity,
-        alarm count, and intake temperature.
+        input, brightness, test pattern, lens positions, 3D settings and
+        status, hours, identity, alarm count, and intake temperature.
 
         Raises like any other method here if a read fails or the connection
         drops mid-poll. Callers that want "unreachable" reported as data
@@ -614,6 +741,18 @@ class ChristieM4K25:
         zoom = self.get_zoom()
         lens_horizontal = self.get_lens_horizontal()
         lens_vertical = self.get_lens_vertical()
+        mode_value, mode_name = self.get_3d_mode()
+        sync_value, sync_name = self.get_3d_sync_output()
+        emitter_delay = self.get_3d_emitter_delay()
+        dark_interval = self.get_3d_dark_interval()
+        input_inverted = self.is_3d_input_inverted()
+        test_pattern_on = self.is_3d_test_pattern_enabled()
+        try:
+            three_d_status = self.get_3d_status()
+        except ChristieError:
+            # Two diagnostic strings are not worth failing the whole poll for
+            # if the projector refuses the SIGN group (e.g. in standby).
+            three_d_status = {"sync": "", "darktime": ""}
 
         intake_temp: float | None = None
         intake = temperatures.get("Air Intake Temperature (Temp 2)", "")
@@ -648,6 +787,15 @@ class ChristieM4K25:
             lens_horizontal=lens_horizontal,
             lens_vertical=lens_vertical,
             intake_temp=intake_temp,
+            three_d_mode=mode_name or THREE_D_MODES.get(mode_value, "Off"),
+            three_d_timing=mode_value in THREE_D_TIMING_MODES,
+            three_d_sync_output=sync_name or THREE_D_SYNC_OUTPUTS.get(sync_value, ""),
+            three_d_emitter_delay=emitter_delay,
+            three_d_dark_interval=dark_interval,
+            three_d_input_inverted=input_inverted,
+            three_d_test_pattern=test_pattern_on,
+            three_d_sync=three_d_status["sync"],
+            three_d_darktime=three_d_status["darktime"],
         )
 
     # -- Escape hatch ---------------------------------------------------------

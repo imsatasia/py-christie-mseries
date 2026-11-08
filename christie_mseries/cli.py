@@ -12,6 +12,13 @@ Usage:
     christie-mseries 192.0.2.50 shutter open
     christie-mseries 192.0.2.50 brightness        # read laser power %
     christie-mseries 192.0.2.50 brightness 70     # set it (30-100)
+    christie-mseries 192.0.2.50 3d                           # all 3D settings and status
+    christie-mseries 192.0.2.50 3d-mode "Side-by-Side 3D"    # or by number; omit to read
+    christie-mseries 192.0.2.50 3d-sync-output "To Emitter"  # needs a packed 3D mode
+    christie-mseries 192.0.2.50 3d-delay -200                # needs a packed 3D mode
+    christie-mseries 192.0.2.50 3d-dark-interval 1500        # needs a packed 3D mode
+    christie-mseries 192.0.2.50 3d-invert on                 # not in a packed 3D mode
+    christie-mseries 192.0.2.50 3d-test-pattern on
     christie-mseries 192.0.2.50 group TEMP
     christie-mseries 192.0.2.50 probe
     christie-mseries 192.0.2.50 raw 'GAM?'
@@ -26,6 +33,7 @@ from christie_mseries import (
     INPUTS,
     STATUS_GROUPS,
     TEST_PATTERNS,
+    THREE_D_TIMING_MODES,
     ChristieM4K25,
 )
 from christie_mseries.exceptions import ChristieError
@@ -268,12 +276,100 @@ def as_json(host: str) -> str:
                 "zoom": snap.zoom,
                 "lens_horizontal": snap.lens_horizontal,
                 "lens_vertical": snap.lens_vertical,
+                "three_d_mode": snap.three_d_mode,
+                "three_d_modes": snap.three_d_modes,
+                "three_d_mode_map": snap.three_d_mode_map,
+                "three_d_timing": snap.three_d_timing,
+                "three_d_sync_output": snap.three_d_sync_output,
+                "three_d_sync_outputs": snap.three_d_sync_outputs,
+                "three_d_sync_output_map": snap.three_d_sync_output_map,
+                "three_d_emitter_delay": snap.three_d_emitter_delay,
+                "three_d_dark_interval": snap.three_d_dark_interval,
+                "three_d_input_inverted": snap.three_d_input_inverted,
+                "three_d_test_pattern": snap.three_d_test_pattern,
+                "three_d_sync": snap.three_d_sync,
+                "three_d_darktime": snap.three_d_darktime,
             }
             if snap.intake_temp is not None:
                 state["intake_temp"] = snap.intake_temp
     except Exception as exc:  # unreachable, mid-transition, or protocol error
         state["error"] = f"{type(exc).__name__}: {exc}"
     return json.dumps(state)
+
+
+_THREE_D_COMMANDS = (
+    "3d",
+    "3d-mode",
+    "3d-sync-output",
+    "3d-delay",
+    "3d-dark-interval",
+    "3d-invert",
+    "3d-test-pattern",
+)
+
+_ON_OFF = {"on": True, "1": True, "true": True, "off": False, "0": False, "false": False}
+
+
+def _number_or_name(argument: str) -> int | str:
+    """A bare number is a value; anything else is a name, which avoids
+    quoting in a shell for callers that already have the number."""
+    return int(argument) if argument.lstrip("-").isdigit() else argument
+
+
+def run_3d(projector: ChristieM4K25, command: str, argument: str | None) -> str:
+    """Read or set one 3D setting (or print them all for plain `3d`) and
+    return the text to show. Raises ValueError on a bad argument and
+    ChristieError if the projector refuses (e.g. a control that the current 3D
+    mode disables)."""
+    if command == "3d":
+        mode_value, mode = projector.get_3d_mode()
+        _, output = projector.get_3d_sync_output()
+        status = projector.get_3d_status()
+        timing = "enabled" if mode_value in THREE_D_TIMING_MODES else "disabled"
+        return "\n".join(
+            [
+                f"3D mode:          {mode_value} ({mode})",
+                f"Sync output:      {output}  (timing controls {timing} in this mode)",
+                f"Sync delay:       {projector.get_3d_emitter_delay()}",
+                f"Dark interval:    {projector.get_3d_dark_interval()}",
+                f"Invert eyes:      {'on' if projector.is_3d_input_inverted() else 'off'}",
+                f"Test pattern:     {'on' if projector.is_3d_test_pattern_enabled() else 'off'}",
+                f"3D sync status:   {status['sync'] or 'unknown'}",
+                f"Darktime status:  {status['darktime'] or 'unknown'}",
+            ]
+        )
+
+    if command == "3d-mode":
+        if argument is not None:
+            projector.set_3d_mode(_number_or_name(argument))
+        return "3D mode is now %d (%s)" % projector.get_3d_mode()
+    if command == "3d-sync-output":
+        if argument is not None:
+            projector.set_3d_sync_output(_number_or_name(argument))
+        return "3D sync output is now %d (%s)" % projector.get_3d_sync_output()
+    if command == "3d-delay":
+        if argument is not None:
+            projector.set_3d_emitter_delay(int(argument))
+        return f"3D sync delay is now {projector.get_3d_emitter_delay()}"
+    if command == "3d-dark-interval":
+        if argument is not None:
+            projector.set_3d_dark_interval(int(argument))
+        return f"3D dark interval is now {projector.get_3d_dark_interval()}"
+
+    # The two switches: 3d-invert and 3d-test-pattern.
+    if argument is not None:
+        if argument.lower() not in _ON_OFF:
+            raise ValueError(f"expected on or off, not {argument!r}")
+        wanted = _ON_OFF[argument.lower()]
+        if command == "3d-invert":
+            projector.set_3d_input_inverted(wanted)
+        elif wanted:
+            projector.enable_3d_test_pattern()
+        else:
+            projector.disable_3d_test_pattern()
+    if command == "3d-invert":
+        return f"Eye inversion is now {'on' if projector.is_3d_input_inverted() else 'off'}"
+    return f"3D test pattern is now {'on' if projector.is_3d_test_pattern_enabled() else 'off'}"
 
 
 def probe(projector: ChristieM4K25) -> None:
@@ -321,6 +417,7 @@ def main() -> None:
             "shutter",
             "brightness",
             "test-pattern",
+            *_THREE_D_COMMANDS,
             "group",
             "probe",
             "raw",
@@ -386,6 +483,11 @@ def main() -> None:
             except ValueError as exc:
                 parser.error(str(exc))
             print("Test pattern is now %d (%s)" % projector.get_test_pattern())
+        elif args.command in _THREE_D_COMMANDS:
+            try:
+                print(run_3d(projector, args.command, args.argument))
+            except ValueError as exc:
+                parser.error(str(exc))
         elif args.command == "group":
             group = (args.argument or "").upper()
             if group not in STATUS_GROUPS:
