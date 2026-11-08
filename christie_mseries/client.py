@@ -9,16 +9,29 @@ no use for it.
 
 from __future__ import annotations
 
+import logging
 import re
 import socket
 
 from .exceptions import ChristieConnectionError, ChristieError
+
+_LOGGER = logging.getLogger(__name__)
 
 DEFAULT_PORT = 3002
 
 # Error replies look like: (65535 00000 ERR00005 "ITP: Too Few Parameters")
 # The leading dest/src address fields are ignored -- see module docstring.
 _ERROR_RE = re.compile(r'ERR(\d+)\s+"([^"]*)"')
+
+# The projector also volunteers messages nobody asked for, and they arrive on
+# the same socket as replies. Seen on the M 4K25 whenever the 3D dark interval
+# changes:
+#     (65535 00000 ERR00000 "System Warning: \(SST+SIGN?054\) 3D Darktime Status = Not Achieved")
+#     (65535 00000 FYI00000 "\(SST+SIGN?054\) 3D Darktime Status = Achieved")
+# ERR00000 is a warning, not a failed command (every real error has a non-zero
+# number), and FYI is purely informational. Treated as replies they raise for
+# a SET that actually succeeded, or get read as the answer to the next query.
+_NOTICE_RE = re.compile(r'\b(?:ERR0+|FYI\d+)\s+"')
 _MESSAGE_RE = re.compile(r"^([A-Za-z]{3})(?:\+([A-Za-z0-9]{4}))?([!?]?)(.*)$", re.DOTALL)
 
 # Most replies carry a number followed by the projector's own description of
@@ -99,6 +112,13 @@ def build_message(
     elif data is not None:
         body += f" {data}"
     return f"({body})".encode("ascii")
+
+
+def is_notice(raw: str) -> bool:
+    """True for an unsolicited projector notice -- an ERR00000 "System
+    Warning" or an FYI message -- as opposed to a reply to something sent.
+    Real errors (ERR00101 and up) are not notices."""
+    return bool(_NOTICE_RE.search(raw))
 
 
 def parse_message(raw: str) -> tuple[str, str | None, str, str]:
@@ -208,10 +228,19 @@ class ChristieClient:
                 raise ChristieConnectionError("Connection closed by projector")
             self._buf.extend(chunk)
 
+    def _read_reply(self) -> str:
+        """Read the next message that is an answer, skipping any unsolicited
+        notices (see is_notice()) that arrive ahead of it."""
+        while True:
+            message = self._read_message()
+            if not is_notice(message):
+                return message
+            _LOGGER.debug("Ignoring projector notice: %s", message)
+
     def query(self, code: str, subcode: str | None = None) -> str:
         """Send a REQUEST (Code?) message and return the reply data."""
         self._require_socket().sendall(build_message(code, subcode, query=True))
-        _, _, _, data = parse_message(self._read_message())
+        _, _, _, data = parse_message(self._read_reply())
         return data
 
     def query_value(self, code: str, subcode: str | None = None) -> tuple[int | None, str | None]:
@@ -234,11 +263,11 @@ class ChristieClient:
         """
         sock = self._require_socket()
         sock.sendall(build_message(code, subcode, query=True))
-        replies = [parse_message(self._read_message())[3]]
+        replies = [parse_message(self._read_reply())[3]]
         sock.settimeout(idle)
         try:
             while True:
-                replies.append(parse_message(self._read_message())[3])
+                replies.append(parse_message(self._read_reply())[3])
         except TimeoutError:
             pass
         finally:
@@ -271,7 +300,7 @@ class ChristieClient:
         prefix = "$" if ack else ""
         self._require_socket().sendall(build_message(code, subcode, data=data, prefix=prefix))
         if ack:
-            reply = self._read_message()
+            reply = self._read_reply()
             if reply[1:-1] == "^":
                 raise ChristieError(0, f"{code} was not acknowledged by the projector")
             parse_message(reply)  # raises if the projector reported an error instead
@@ -280,12 +309,13 @@ class ChristieClient:
 
     def _raise_pending_error(self, timeout: float) -> None:
         """Consume anything the projector sent back unprompted, raising if it
-        was an error. Returns quietly once it has gone silent for `timeout`."""
+        was an error. Returns quietly once it has gone silent for `timeout`.
+        Notices are not errors and are skipped."""
         sock = self._require_socket()
         sock.settimeout(timeout)
         try:
             while True:
-                parse_message(self._read_message())
+                parse_message(self._read_reply())
         except TimeoutError:
             pass
         finally:

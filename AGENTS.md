@@ -47,6 +47,13 @@ itself.
   `get_serial_number()` when it's actually needed. Use an RFC 5737
   documentation address (`192.0.2.0/24`) in docs/examples instead of a
   real IP.
+- Dump the menu with the projector **powered on**. In standby most pages are
+  disabled and some are placeholders: the 3D Settings page showed as a greyed
+  "Reserved" entry, and all six 3D controls were missing from the first map.
+  A control that is absent from `docs/menu-map.json` may just be hidden.
+- Unsolicited messages (`ERR00000` warnings, `FYI` notices) share the socket
+  with replies and are skipped in `client.py` (`is_notice()`); any new read
+  loop must go through `_read_reply()`, not `_read_message()`.
 - Firmware target is 1.3.x. After a firmware update, regenerate
   `docs/menu-map.json` (`examples/dump_menu.py --json`) and diff it before
   trusting any code the tests don't already cover — the available control

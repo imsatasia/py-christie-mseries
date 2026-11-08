@@ -8,13 +8,44 @@ import unittest
 from conftest import TIMEOUT, FakeSocket
 
 from christie_mseries.exceptions import ChristieError
-from christie_mseries.projector import INPUTS, INPUTS_BY_NAME, ChristieM4K25, PowerState, Snapshot
+from christie_mseries.projector import (
+    INPUTS,
+    INPUTS_BY_NAME,
+    THREE_D_DARK_INTERVAL_MAX,
+    THREE_D_DARK_INTERVAL_MIN,
+    THREE_D_EMITTER_DELAY_MAX,
+    THREE_D_EMITTER_DELAY_MIN,
+    THREE_D_MODES,
+    THREE_D_MODES_BY_NAME,
+    THREE_D_SYNC_OUTPUTS,
+    THREE_D_SYNC_OUTPUTS_BY_NAME,
+    THREE_D_TIMING_MODES,
+    ChristieM4K25,
+    PowerState,
+    Snapshot,
+)
 
 
 def _projector(chunks=()):
     projector = ChristieM4K25("projector.invalid")
     projector._client._sock = FakeSocket(chunks)
     return projector
+
+
+# What snapshot() reads for 3D, in order: the six controls, then the SIGN
+# status group. 3D off, nothing displayed -- the reading when idle.
+THREE_D_OFF = [
+    b'(TDM!000 "Off")',
+    b'(TDO!000 "To Emitter")',
+    b"(TDD!000)",
+    b"(DRK!1500)",
+    b"(TDN!000)",
+    b"(TDT!000)",
+    b'(SST+SIGN!"96.00Hz" "Output Frequency")',
+    b'(SST+SIGN!"N/A" "3D Sync")',
+    b'(SST+SIGN!"N/A" "3D Darktime Status")',
+    TIMEOUT,
+]
 
 
 class PowerTests(unittest.TestCase):
@@ -253,6 +284,7 @@ class SnapshotTests(unittest.TestCase):
                 b"(ZOM!-267)",
                 b"(LHO!-1032)",
                 b"(LVO!-1417)",
+                *THREE_D_OFF,
                 # is_shutter_open()
                 b"(SHU!000)",
                 # get_status("ALRM") -- healthy/empty; the error is the
@@ -309,6 +341,7 @@ class SnapshotTests(unittest.TestCase):
                 b"(ZOM!0)",
                 b"(LHO!0)",
                 b"(LVO!0)",
+                *THREE_D_OFF,
                 b"(SHU!000)",
                 b'(65535 00000 ERR00009 "No status items")',
                 b"(LAS+POWR!700)",
@@ -337,6 +370,7 @@ class SnapshotTests(unittest.TestCase):
                 b"(ZOM!0)",
                 b"(LHO!0)",
                 b"(LVO!0)",
+                *THREE_D_OFF,
                 b"(SHU!000)",
                 b'(65535 00000 ERR00009 "No status items")',
                 b"(LAS+POWR!700)",
@@ -351,3 +385,248 @@ class SnapshotTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThreeDTests(unittest.TestCase):
+    """The six 3D controls. Names, numbers and ranges are the ones read back
+    from a physical M 4K25 RGB, not the API doc's tables."""
+
+    @staticmethod
+    def _sent(projector):
+        return bytes(projector._client._sock.sent)
+
+    def test_tables_match_what_the_projector_reported(self):
+        self.assertEqual(
+            THREE_D_MODES,
+            {
+                0: "Off",
+                1: "Auto Detect",
+                2: "Multi-Flash 3D",
+                3: "Side-by-Side 3D",
+                5: "Top-and-Bottom 3D",
+                6: "Frame Packing 3D",
+            },
+        )
+        self.assertEqual(THREE_D_SYNC_OUTPUTS, {0: "To Emitter", 1: "To Next Input"})
+        self.assertEqual(THREE_D_TIMING_MODES, {3, 5, 6})
+
+    def test_names_are_unique_so_the_reverse_lookups_are_complete(self):
+        self.assertEqual(len(THREE_D_MODES_BY_NAME), len(THREE_D_MODES))
+        self.assertEqual(len(THREE_D_SYNC_OUTPUTS_BY_NAME), len(THREE_D_SYNC_OUTPUTS))
+
+    def test_get_3d_mode_returns_value_and_name(self):
+        projector = _projector([b'(TDM!003 "Side-by-Side 3D")'])
+        self.assertEqual(projector.get_3d_mode(), (3, "Side-by-Side 3D"))
+
+    def test_set_3d_mode_by_number(self):
+        projector = _projector()
+        projector.set_3d_mode(6)
+        self.assertEqual(self._sent(projector), b"(TDM 6)")
+
+    def test_set_3d_mode_by_name(self):
+        projector = _projector()
+        projector.set_3d_mode("Top-and-Bottom 3D")
+        self.assertEqual(self._sent(projector), b"(TDM 5)")
+
+    def test_set_3d_mode_unknown_name_raises_without_sending(self):
+        projector = _projector()
+        with self.assertRaises(ValueError):
+            projector.set_3d_mode("Native 3D")  # the API doc's name for 1, not this unit's
+        self.assertEqual(self._sent(projector), b"")
+
+    def test_set_3d_mode_unknown_number_is_left_for_the_projector_to_reject(self):
+        projector = _projector([b'(65535 00000 ERR00104 "TDM: Invalid Value")'])
+        with self.assertRaises(ChristieError) as ctx:
+            projector.set_3d_mode(4)
+        self.assertEqual(ctx.exception.code, 104)
+
+    def test_get_and_set_3d_sync_output(self):
+        projector = _projector([b'(TDO!001 "To Next Input")'])
+        self.assertEqual(projector.get_3d_sync_output(), (1, "To Next Input"))
+        projector = _projector()
+        projector.set_3d_sync_output("To Next Input")
+        self.assertEqual(self._sent(projector), b"(TDO 1)")
+
+    def test_set_3d_sync_output_unknown_name_raises_without_sending(self):
+        projector = _projector()
+        with self.assertRaises(ValueError):
+            projector.set_3d_sync_output("To Nowhere")
+        self.assertEqual(self._sent(projector), b"")
+
+    def test_timing_controls_are_disabled_outside_the_packed_modes(self):
+        projector = _projector([b'(65535 00000 ERR00105 "TDO: Disabled Control")'])
+        with self.assertRaises(ChristieError) as ctx:
+            projector.set_3d_sync_output(0)
+        self.assertEqual(ctx.exception.code, 105)
+
+    def test_emitter_delay_round_trips_including_negative(self):
+        projector = _projector([b"(TDD!-250)"])
+        self.assertEqual(projector.get_3d_emitter_delay(), -250)
+        projector = _projector()
+        projector.set_3d_emitter_delay(-250)
+        self.assertEqual(self._sent(projector), b"(TDD -250)")
+
+    def test_emitter_delay_accepts_both_ends_of_its_range(self):
+        for value in (THREE_D_EMITTER_DELAY_MIN, 0, THREE_D_EMITTER_DELAY_MAX):
+            projector = _projector()
+            projector.set_3d_emitter_delay(value)
+            self.assertEqual(self._sent(projector), b"(TDD %d)" % value)
+
+    def test_emitter_delay_outside_its_range_raises_instead_of_being_clamped(self):
+        # The projector would answer 1001 with a silent clamp to 1000.
+        for value in (THREE_D_EMITTER_DELAY_MIN - 1, THREE_D_EMITTER_DELAY_MAX + 1):
+            projector = _projector()
+            with self.assertRaises(ValueError):
+                projector.set_3d_emitter_delay(value)
+            self.assertEqual(self._sent(projector), b"")
+
+    def test_dark_interval_accepts_both_ends_of_its_range(self):
+        for value in (THREE_D_DARK_INTERVAL_MIN, 1500, THREE_D_DARK_INTERVAL_MAX):
+            projector = _projector()
+            projector.set_3d_dark_interval(value)
+            self.assertEqual(self._sent(projector), b"(DRK %d)" % value)
+
+    def test_dark_interval_outside_its_range_raises_instead_of_being_clamped(self):
+        for value in (THREE_D_DARK_INTERVAL_MIN - 1, THREE_D_DARK_INTERVAL_MAX + 1):
+            projector = _projector()
+            with self.assertRaises(ValueError):
+                projector.set_3d_dark_interval(value)
+            self.assertEqual(self._sent(projector), b"")
+
+    def test_get_dark_interval(self):
+        self.assertEqual(_projector([b"(DRK!1500)"]).get_3d_dark_interval(), 1500)
+
+    def test_input_inversion(self):
+        self.assertTrue(_projector([b"(TDN!001)"]).is_3d_input_inverted())
+        self.assertFalse(_projector([b"(TDN!000)"]).is_3d_input_inverted())
+        projector = _projector()
+        projector.set_3d_input_inverted(True)
+        self.assertEqual(self._sent(projector), b"(TDN 1)")
+
+    def test_3d_test_pattern(self):
+        self.assertTrue(_projector([b"(TDT!001)"]).is_3d_test_pattern_enabled())
+        projector = _projector()
+        projector.enable_3d_test_pattern()
+        projector.disable_3d_test_pattern()
+        self.assertEqual(self._sent(projector), b"(TDT 1)(TDT 0)")
+
+    def test_3d_status_reads_the_sign_group(self):
+        projector = _projector(
+            [
+                b'(SST+SIGN!"96.00Hz" "Output Frequency")',
+                b'(SST+SIGN!"Locked" "3D Sync")',
+                b'(SST+SIGN!"Achieved" "3D Darktime Status")',
+                TIMEOUT,
+            ]
+        )
+        self.assertEqual(projector.get_3d_status(), {"sync": "Locked", "darktime": "Achieved"})
+
+    def test_3d_status_is_empty_strings_when_the_group_lacks_the_items(self):
+        projector = _projector([b'(SST+SIGN!"96.00Hz" "Output Frequency")', TIMEOUT])
+        self.assertEqual(projector.get_3d_status(), {"sync": "", "darktime": ""})
+
+    def test_setting_the_dark_interval_survives_the_projectors_darktime_warning(self):
+        # Captured from a unit: lengthening DRK made it volunteer these two
+        # frames. The SET succeeded; neither is an error.
+        projector = _projector(
+            [
+                b'(65535 00000 ERR00000 "System Warning: \\(SST+SIGN?054\\) '
+                b'3D Darktime Status = Not Achieved")',
+                b'(65535 00000 FYI00000 "\\(SST+SIGN?054\\) 3D Darktime Status = Achieved")',
+            ]
+        )
+        projector.set_3d_dark_interval(3000)  # must not raise
+        self.assertEqual(self._sent(projector), b"(DRK 3000)")
+
+    def test_a_notice_ahead_of_a_reply_is_not_mistaken_for_it(self):
+        projector = _projector(
+            [
+                b'(65535 00000 FYI00000 "\\(SST+SIGN?054\\) 3D Darktime Status = Achieved")',
+                b"(DRK!2000)",
+            ]
+        )
+        self.assertEqual(projector.get_3d_dark_interval(), 2000)
+
+
+class ThreeDSnapshotTests(unittest.TestCase):
+    """snapshot() carries the 3D state, so callers never re-gather it."""
+
+    @staticmethod
+    def _snapshot(three_d):
+        return _projector(
+            [
+                b'(PWR!001 "On")',
+                b'(SST+CONF!"Christie M 4K25 RGB" "Projector Model")',
+                b'(SST+CONF!"12345" "Projector S/N")',
+                TIMEOUT,
+                b'(65535 00000 ERR00009 "No status items")',
+                b'(65535 00000 ERR00009 "No status items")',
+                b'(SIN!003 "One-Port VOM-HDMI")',
+                b'(ITP!000 "Off")',
+                b"(FCS!0)",
+                b"(ZOM!0)",
+                b"(LHO!0)",
+                b"(LVO!0)",
+                *three_d,
+                b"(SHU!000)",
+                b'(65535 00000 ERR00009 "No status items")',
+                b"(LAS+POWR!700)",
+                b'(LAS+STAT!003 "Enabled")',
+            ]
+        ).snapshot()
+
+    def test_idle_projector(self):
+        snap = self._snapshot(THREE_D_OFF)
+        self.assertEqual(snap.three_d_mode, "Off")
+        self.assertFalse(snap.three_d_timing)
+        self.assertEqual(snap.three_d_sync_output, "To Emitter")
+        self.assertEqual(snap.three_d_emitter_delay, 0)
+        self.assertEqual(snap.three_d_dark_interval, 1500)
+        self.assertFalse(snap.three_d_input_inverted)
+        self.assertFalse(snap.three_d_test_pattern)
+        self.assertEqual(snap.three_d_sync, "N/A")
+        self.assertEqual(snap.three_d_darktime, "N/A")
+        self.assertIn("Frame Packing 3D", snap.three_d_modes)
+        self.assertEqual(snap.three_d_mode_map["Side-by-Side 3D"], 3)
+        self.assertEqual(snap.three_d_sync_output_map["To Next Input"], 1)
+
+    def test_packed_mode_with_everything_set(self):
+        snap = self._snapshot(
+            [
+                b'(TDM!003 "Side-by-Side 3D")',
+                b'(TDO!001 "To Next Input")',
+                b"(TDD!-120)",
+                b"(DRK!2500)",
+                b"(TDN!001)",
+                b"(TDT!001)",
+                b'(SST+SIGN!"Locked" "3D Sync")',
+                b'(SST+SIGN!"Not Achieved" "3D Darktime Status")',
+                TIMEOUT,
+            ]
+        )
+        self.assertEqual(snap.three_d_mode, "Side-by-Side 3D")
+        self.assertTrue(snap.three_d_timing)
+        self.assertEqual(snap.three_d_sync_output, "To Next Input")
+        self.assertEqual(snap.three_d_emitter_delay, -120)
+        self.assertEqual(snap.three_d_dark_interval, 2500)
+        self.assertTrue(snap.three_d_input_inverted)
+        self.assertTrue(snap.three_d_test_pattern)
+        self.assertEqual(snap.three_d_sync, "Locked")
+        self.assertEqual(snap.three_d_darktime, "Not Achieved")
+
+    def test_timing_flag_follows_the_mode_number_for_every_mode(self):
+        for value, name in THREE_D_MODES.items():
+            three_d = [b'(TDM!%03d "%s")' % (value, name.encode())] + THREE_D_OFF[1:]
+            self.assertEqual(self._snapshot(three_d).three_d_timing, value in {3, 5, 6}, name)
+
+    def test_a_refused_sign_group_does_not_fail_the_whole_snapshot(self):
+        three_d = THREE_D_OFF[:6] + [b'(65535 00000 ERR00105 "SST: Disabled Control")']
+        snap = self._snapshot(three_d)
+        self.assertEqual(snap.three_d_sync, "")
+        self.assertEqual(snap.three_d_darktime, "")
+        self.assertEqual(snap.brightness, 70.0)  # later reads still lined up
+
+    def test_a_snapshot_built_without_3d_fields_still_has_usable_defaults(self):
+        # Callers and fixtures written before 3D support construct Snapshot
+        # directly; they must not have to know about the new fields.
+        self.assertIn("Off", Snapshot.__dataclass_fields__["three_d_modes"].default_factory())
